@@ -36,10 +36,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="BulletComponent.cs" />
+    <Compile Include="Chunk.cs" />
+    <Compile Include="ChunkLoader.cs" />
+    <Compile Include="ColliderECS.cs" />
+    <Compile Include="GameManager.cs" />
+    <Compile Include="LevelLoader.cs" />
+    <Compile Include="Rigidbody.cs" />
     <Compile Include="LineSegment.cs" />
     <Compile Include="Player.cs" />
-    <Compile Include="Polygon.cs" />
     <Compile Include="ECS\Component.cs" />
     <Compile Include="ECS\Component_Sprite.cs" />
     <Compile Include="GXPEngine\AddOns\Gizmos.cs" />

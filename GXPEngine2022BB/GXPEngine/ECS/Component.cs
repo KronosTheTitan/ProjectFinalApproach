@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using GXPEngine;
-class Component
+public class Component
 {
     public GameObjectECS gameObject;
     bool _isActive = true;
@@ -32,6 +32,10 @@ class Component
 
     }
     public virtual void UpdateECS()
+    {
+
+    }
+    public virtual void OnChunkChange()
     {
 
     }

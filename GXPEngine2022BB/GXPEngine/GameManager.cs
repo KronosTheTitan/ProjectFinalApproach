@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using GXPEngine;
-class Rigidbody : Component
-{
 
+namespace GXPEngine
+{
+    class GameManager
+    {
+    }
 }

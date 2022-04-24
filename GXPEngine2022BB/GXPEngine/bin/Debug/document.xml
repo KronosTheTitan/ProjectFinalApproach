@@ -1,0 +1,15 @@
+<Mainbody>
+  <GameObject x="0" y="0">
+    <Sprite_Component path="circle.png" />
+  </GameObject>
+  <GameObject x="0" y="0">
+    <Sprite_Component path="circle.png" />
+    <Sprite_Component path="square.png" />
+  </GameObject>
+  <GameObject x="0" y="0">
+    <Sprite_Component path="circle.png" />
+  </GameObject>
+  <GameObject x="0" y="0">
+    <Sprite_Component path="circle.png" />
+  </GameObject>
+</Mainbody>

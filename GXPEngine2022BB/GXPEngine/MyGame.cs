@@ -1,10 +1,12 @@
-using System;									// System contains a lot of default C# libraries 
+using System;                                   // System contains a lot of default C# libraries
+using System.Collections.Generic;
 using GXPEngine;                                // GXPEngine contains the engine
 using System.Drawing;							// System.Drawing contains drawing tools such as Color definitions
 
 public class MyGame : Game
 {
-	public MyGame() : base(800, 600, false)		// Create a window that's 800x600 and NOT fullscreen
+	public List<GameObjectECS> gameObjects = new List<GameObjectECS>();
+	public MyGame() : base(1920, 1080, false)		// Create a window that's 800x600 and NOT fullscreen
 	{
 		// Draw some things on a canvas:
 		EasyDraw canvas = new EasyDraw(800, 600);
@@ -19,12 +21,36 @@ public class MyGame : Game
 		// Add the canvas to the engine to display it:
 		AddChild(canvas);
 		Console.WriteLine("MyGame initialized");
+		ChunkLoader.Instance.Start();
+		GameObjectECS gameObject = new GameObjectECS();
+		gameObjects.Add(gameObject);
+		//gameObject.transform = new Vec2(width / 2, height / 2);
+		Player player = new Player(gameObject);
+
+		GameObjectECS gameObject2 = new GameObjectECS();
+
+		Bullet_Component bullet = new Bullet_Component(gameObject2);
+
+		GameObjectECS gameObject3 = new GameObjectECS();
+
+		Vec2[] points =
+		{
+			new Vec2(0,height/2),
+			new Vec2(width,height/2)
+		};
+		int[] lines =
+		{
+			0,
+			1
+		};
+		ColliderECS collider = new ColliderECS(gameObject3, points, lines);
+		//LevelLoader.LoadLevel("document.xml");
 	}
 
 	// For every game object, Update is called every frame, by the engine:
 	void Update()
 	{
-		// Empty
+		ChunkLoader.Instance.Update();
 	}
 
 	static void Main()							// Main() is the first method that's called when the program is run

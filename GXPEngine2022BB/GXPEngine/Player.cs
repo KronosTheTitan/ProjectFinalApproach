@@ -5,13 +5,15 @@ using System.Text;
 using GXPEngine;
 class Player : Component
 {
-    public Vec2 velocity = new Vec2();
     public float speed = 5f;
     public float topSpeed = 10f;
     public float jumpForce = 10f;
     public Player(GameObjectECS pGameObjectECS) : base(pGameObjectECS)
     {
-
+        pGameObjectECS.AddComponent(new Component_Sprite(pGameObjectECS,"circle.png"));
+        pGameObjectECS.AddComponent(new Rigidbody(pGameObjectECS));
+        ChunkLoader.Instance.loadedChunks.Add(gameObject.chunk);
+        ChunkLoader.Instance.LoadNewChunks(gameObject.chunk.xPos, gameObject.chunk.yPos);
     }
     public override void UpdateECS()
     {
@@ -19,17 +21,26 @@ class Player : Component
     }
     void Controls()
     {
-        if (Input.GetKey(Key.D)&&velocity.x<topSpeed)
+        if (Input.GetKey(Key.D))
         {
-            velocity += new Vec2(speed, 0);
+            gameObject.velocity += new Vec2(speed, 0);
         }
-        if (Input.GetKey(Key.A) && velocity.x < -topSpeed)
+        if (Input.GetKey(Key.A))
         {
-            velocity += new Vec2(-speed, 0);
+            gameObject.velocity += new Vec2(-speed, 0);
         }
-        if (Input.GetKeyDown(Key.W)|Input.GetKeyDown(Key.SPACE))
+        if (Input.GetKey(Key.W)|Input.GetKeyDown(Key.SPACE))
         {
-            velocity += new Vec2(0, jumpForce);
+            gameObject.velocity += new Vec2(0, -speed);
         }
+        if (Input.GetKey(Key.S) | Input.GetKeyDown(Key.SPACE))
+        {
+            gameObject.velocity += new Vec2(0, speed);
+        }
+    }
+    public override void OnChunkChange()
+    {
+        base.OnChunkChange();
+        ChunkLoader.Instance.LoadNewChunks(gameObject.newChunk.xPos, gameObject.newChunk.yPos);
     }
 }

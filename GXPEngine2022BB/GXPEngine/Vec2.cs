@@ -3,28 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using GXPEngine;
-struct Vec2
+public struct Vec2
 {
-    float _x;
-    public float x
-    {
-        get
-        {
-            return _x;
-        }
-    }
-    float _y; 
-    public float y
-    {
-        get
-        {
-            return _y;
-        }
-    }
+    public float x;
+    public float y;
     public Vec2(float pX,float pY)
     {
-        _x = pX;
-        _y = pY;
+        x = pX;
+        y = pY;
     }
     public static Vec2 operator +(Vec2 left, Vec2 right)
     {
@@ -56,23 +42,37 @@ struct Vec2
     }
     public float Length()
     {
-        return Mathf.Sqrt((_x * _x) + (_y * _y));
+        return Mathf.Sqrt((x * x) + (y * y));
     }
     public void SetXY(float pX, float pY)
     {
-        _x = pX;
-        _y = pY;
+        x = pX;
+        y = pY;
     }
     public void Normalize()
     {
         float l = Length();
-        _x /= l;
-        _y /= l;
+        x /= l;
+        y /= l;
     }
     public Vec2 Normalized()
     {
         Vec2 vec2 = this;
         vec2.Normalize();
         return vec2;
+    }
+    public float Dot(Vec2 other)
+    {
+        return x * other.x + y * other.y;
+    }
+    public Vec2 Normal()
+    {
+        Vec2 output = new Vec2(x * 0 - y * 1, x * 1 + y * 0);
+        output.Normalize();
+        return output;
+    }
+    public Vec2 Reflect(Vec2 pNormal, float pBounciness = 1)
+    {
+        return this - (1 + pBounciness) * Dot(pNormal) * pNormal;
     }
 }
