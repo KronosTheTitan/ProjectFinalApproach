@@ -21,8 +21,6 @@ class ChunkLoader
     public List<Chunk> tempChunks = new List<Chunk>();
     public List<Chunk> loadedChunks = new List<Chunk>();
 
-    public List<ColliderECS> loadedColiders = new List<ColliderECS>();
-
     public int maxX = 3;
     public int maxY = 3;
     public int chunkSize = 512;
@@ -56,13 +54,12 @@ class ChunkLoader
                     if (!loadedChunks.Contains(chunks[x, y]))
                         loadedChunks.Add(chunks[x, y]);
 
-                    Console.WriteLine(loadedChunks.Count + " : " + x + " : " + y);
+                    //Console.WriteLine(loadedChunks.Count + " : " + x + " : " + y);
                 }
                 catch(IndexOutOfRangeException e)
                 {
-                    Console.WriteLine(x + " : " + y);
+                    //Console.WriteLine(x + " : " + y);
                 }
-                //Console.WriteLine(iX + " : " + iY);
             }
         }
     }

@@ -6,7 +6,7 @@ using System.Drawing;							// System.Drawing contains drawing tools such as Col
 public class MyGame : Game
 {
 	public List<GameObjectECS> gameObjects = new List<GameObjectECS>();
-	public MyGame() : base(1920, 1080, false)		// Create a window that's 800x600 and NOT fullscreen
+	public MyGame() : base(800, 600, false)		// Create a window that's 800x600 and NOT fullscreen
 	{
 		// Draw some things on a canvas:
 		EasyDraw canvas = new EasyDraw(800, 600);
@@ -27,11 +27,12 @@ public class MyGame : Game
 		//gameObject.transform = new Vec2(width / 2, height / 2);
 		Player player = new Player(gameObject);
 
-		GameObjectECS gameObject2 = new GameObjectECS();
+		//GameObjectECS gameObject2 = new GameObjectECS();
 
-		Bullet_Component bullet = new Bullet_Component(gameObject2);
+		//Bullet_Component bullet = new Bullet_Component(gameObject2);
 
 		GameObjectECS gameObject3 = new GameObjectECS();
+		gameObject3.objectStatic = true;
 
 		Vec2[] points =
 		{
@@ -40,17 +41,17 @@ public class MyGame : Game
 		};
 		int[] lines =
 		{
-			0,
-			1
+			1,
+			0
 		};
-		ColliderECS collider = new ColliderECS(gameObject3, points, lines);
+		Collider collider = new Collider(gameObject3, points, lines);
 		//LevelLoader.LoadLevel("document.xml");
 	}
 
 	// For every game object, Update is called every frame, by the engine:
 	void Update()
 	{
-		ChunkLoader.Instance.Update();
+		UpdateManagerECS.Instance.Update();
 	}
 
 	static void Main()							// Main() is the first method that's called when the program is run

@@ -10,7 +10,6 @@ namespace GXPEngine
 	public abstract class GameObject : Transformable
 	{
 		public string name;
-		private Collider _collider;
 		
 		private List<GameObject> _children = new List<GameObject>();
 		private GameObject _parent = null;
@@ -32,16 +31,7 @@ namespace GXPEngine
 		/// </param> 
 		public GameObject(bool addCollider=false)
 		{
-			if (addCollider) {
-				_collider = createCollider ();
-			}
-		}
 
-		/// <summary>
-		/// Create and return a collider to use for this game object. Null is allowed.
-		/// </summary>
-		protected virtual Collider createCollider () {
-			return null;
 		}
 
 		//------------------------------------------------------------------------------------------------------------------------
@@ -60,13 +50,6 @@ namespace GXPEngine
 				return parent._children.IndexOf(this);
 			}
 		}
-
-		//------------------------------------------------------------------------------------------------------------------------
-		//														collider
-		//------------------------------------------------------------------------------------------------------------------------
-		internal Collider collider {
-			get { return _collider; }
-		}
 		
 		//------------------------------------------------------------------------------------------------------------------------
 		//														game
@@ -80,18 +63,6 @@ namespace GXPEngine
 			get {
 				return Game.main;
 			}
-		}
-
-		/// <summary>
-		/// Get all a list of all objects that currently overlap this one.
-		/// Calling this method will test collisions between this object and all other colliders in the scene.
-		/// It can be called mid-step and is included for convenience, not performance.
-		/// Set includeTriggers to true to include trigger colliders in the list, and 
-		/// includeSolid to include solid (=non-trigger) colliders.
-		/// </summary>
-		public GameObject[] GetCollisions (bool includeTriggers = true, bool includeSolid = true)
-		{
-			return game.GetGameObjectCollisions(this, includeTriggers, includeSolid);
 		}
 		
 		//------------------------------------------------------------------------------------------------------------------------
@@ -406,112 +377,6 @@ namespace GXPEngine
 			foreach (GameObject child in _children) {
 				child.UnSubscribe ();
 			}
-		}
-
-		//------------------------------------------------------------------------------------------------------------------------
-		//														HitTest()
-		//------------------------------------------------------------------------------------------------------------------------
-		/// <summary>
-		/// Tests if this object overlaps with the one specified. 
-		/// </summary>
-		/// <returns>
-		/// <c>true</c>, if 'this' overlaps with 'other'.
-		/// </returns>
-		/// <param name='other'>
-		/// The other game object.
-		/// </param>
-		virtual public bool HitTest(GameObject other) {
-			return _collider != null && other._collider != null && _collider.HitTest (other._collider);
-		}
-
-		/// <summary>
-		/// If changing the x and y coordinates of this GameObject by vx and vy respectively
-		///   would cause a collision with the GameObject other, this method returns a 
-		///   "time of impact" between 0 and 1,
-		///   which is a scalar multiplier for vx and vy, giving the amount of safe movement until collision.
-		/// It is zero if the two game objects are already overlapping, and 
-		///   moving by vx and vy would cause a worse overlap.
-		/// In all other cases, the returned value is bigger than 1.
-		/// If a time of impact below 1 is returned, the normal will be the collision normal 
-		///   (otherwise it is undefined).
-		/// </summary>
-		virtual public float TimeOfImpact (GameObject other, float vx, float vy, out Vector2 normal) {
-			normal = new Vector2 ();
-			if (_collider == null || other._collider == null || parent==null)
-				return float.MaxValue;
-			// Compute world space velocity:
-			//Vector2 p1 = parent.TransformPoint (vx, vy);
-			//Vector2 p0 = parent.TransformPoint (0, 0);
-			Vector2 worldVelocity=parent.TransformDirection(vx,vy);
-			float TOI=_collider.TimeOfImpact (other._collider, 
-				//p1.x-p0.x, p1.y-p0.y, 
-				worldVelocity.x,worldVelocity.y,
-				out normal
-			);
-			return TOI;
-		}
-
-		/// <summary>
-		/// Tries to move this object by vx,vy (in parent space, similar to the translate method), 
-		/// until it collides with one of the given objects. Objects without a solid (=non-trigger) collider are ignored.
-		/// In case of a collision, it returns a Collision object with information such as the normal and time of impact 
-		/// (the point and penetration depth fields of the collision object will always be zero).
-		/// Otherwise it returns null.
-		/// 
-		/// As objectsToCheck, pass an array or List of game objects to check against 
-		/// (this moving game object will move through all objects that are not in the given array or list).
-		/// </summary>
-		virtual public Collision MoveUntilCollision(float vx, float vy, IEnumerable<GameObject> objectsToCheck) {
-			Collision col = null;
-			float minTOI = 1;
-			foreach (GameObject other in objectsToCheck) {
-				if (other.collider != null && other.collider.isTrigger) continue;
-				Vector2 newNormal;
-				float newTOI = TimeOfImpact (other, vx, vy, out newNormal);
-				if (newTOI < minTOI) {
-					col = new Collision (this, other, newNormal, newTOI);
-					minTOI = newTOI;
-				}
-			}
-			x += vx * minTOI;
-			y += vy * minTOI;
-			return col;
-		}
-
-		/// <summary>
-		/// Tries to move this object by vx,vy (in parent space, similar to the translate method), 
-		/// until it collides with another object that has a solid (=non-trigger) collider. 
-		/// In case of a collision, it returns a Collision object with information such as the normal and time of impact 
-		/// (the point and penetration depth fields of the collision object will always be zero).
-		/// Otherwise it returns null.
-		/// 
-		/// Note: this is a very expensive method since it uses GetCollisions, and 
-		/// tunneling is possible since it uses discrete collision detection - use with care.
-		/// </summary>
-		virtual public Collision MoveUntilCollision(float vx, float vy) {
-			x += vx;
-			y += vy;
-			GameObject[] overlaps = GetCollisions (false,true);
-			x -= vx;
-			y -= vy;
-			return MoveUntilCollision (vx, vy, overlaps);
-		}
-
-		//------------------------------------------------------------------------------------------------------------------------
-		//														HitTestPoint()
-		//------------------------------------------------------------------------------------------------------------------------
-		/// <summary>
-		/// Returns <c>true</c> if a 2D point (given in global / screen space) overlaps with this object.
-		/// You could use this for instance to check if the mouse (Input.mouseX, Input.mouseY) is over the object.
-		/// </summary>
-		/// <param name='x'>
-		/// The x coordinate to test.
-		/// </param>
-		/// <param name='y'>
-		/// The y coordinate to test.
-		/// </param>
-		virtual public bool HitTestPoint(float x, float y) {
-			return _collider != null && _collider.HitTestPoint(x, y);
 		}		
 		
 		//------------------------------------------------------------------------------------------------------------------------

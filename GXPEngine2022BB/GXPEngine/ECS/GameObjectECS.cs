@@ -15,10 +15,13 @@ public class GameObjectECS
     public Vec2 transform = new Vec2();
     public Vec2 oldTransform;
     public Vec2 velocity;
+
+    public bool objectStatic = false;
     public GameObjectECS()
     {
         chunk = ChunkLoader.Instance.chunks[(int)transform.x / ChunkLoader.Instance.chunkSize, (int)transform.y / ChunkLoader.Instance.chunkSize];
         chunk.gameObjects.Add(this);
+        newChunk = chunk;
 
         ChunkLoader.Instance.LateUpdates += LateUpdate;
     }
@@ -63,8 +66,11 @@ public class GameObjectECS
         foreach (Component component in components)
             component.UpdateECS();
         oldTransform = transform;
-        transform += velocity;
-        checkChunk();        
+        if (!objectStatic)
+        {
+            transform += velocity;
+            checkChunk();
+        }        
     }
     public void checkChunk()
     {
@@ -80,7 +86,7 @@ public class GameObjectECS
         }
         catch(IndexOutOfRangeException e)
         {
-
+            newChunk = chunk;
         }
     }
     public void LateUpdate()
@@ -90,7 +96,12 @@ public class GameObjectECS
         newChunk.gameObjects.Add(this);
         if (newChunk != chunk)
             foreach (Component component in components)
-                component.OnChunkChange();
+                    component.OnChunkChange();
         chunk = newChunk;
+    }
+    public void OnCollision(GameObjectECS other)
+    {
+        foreach (Component component in components)
+            component.OnCollision(other);
     }
 }

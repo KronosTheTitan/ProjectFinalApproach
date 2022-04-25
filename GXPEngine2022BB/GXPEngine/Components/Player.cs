@@ -21,6 +21,8 @@ class Player : Component
     }
     void Controls()
     {
+        //gameObject.transform = new Vec2(Input.mouseX, Input.mouseY);
+        
         if (Input.GetKey(Key.D))
         {
             gameObject.velocity += new Vec2(speed, 0);
@@ -31,16 +33,23 @@ class Player : Component
         }
         if (Input.GetKey(Key.W)|Input.GetKeyDown(Key.SPACE))
         {
-            gameObject.velocity += new Vec2(0, -speed);
+            gameObject.velocity += new Vec2(0, -jumpForce);
         }
         if (Input.GetKey(Key.S) | Input.GetKeyDown(Key.SPACE))
         {
-            gameObject.velocity += new Vec2(0, speed);
+            //gameObject.velocity += new Vec2(0, speed);
         }
+        
+        //gameObject.velocity = new Vec2(3, 3);
     }
     public override void OnChunkChange()
     {
         base.OnChunkChange();
         ChunkLoader.Instance.LoadNewChunks(gameObject.newChunk.xPos, gameObject.newChunk.yPos);
+    }
+    public override void OnCollision(GameObjectECS gameObject)
+    {
+        base.OnCollision(gameObject);
+        //Console.WriteLine("Hit!");
     }
 }
