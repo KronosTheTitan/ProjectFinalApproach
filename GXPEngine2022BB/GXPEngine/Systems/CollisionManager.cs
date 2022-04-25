@@ -30,49 +30,79 @@ class CollisionManager
             }
 		}
 		foreach (Rigidbody rigidbody in activeRigidbodies)
-			foreach (Collider collider in activeColliders)
-				foreach (LineSegment line in collider.lines)
+        {
+			Collision collision = FindEarliestCollision(rigidbody);
+            if (collision != null)
+            {
+				ResolveCollision(collision);
+				Console.WriteLine(collision.t);
+                if (Approximate(collision.t,0))
+                {
+					rigidbody.gameObject.transform += (collision.line.end-collision.line.start).Normal(); 
+                }
+            }
+        }
+	}
+
+	Collision FindEarliestCollision(Rigidbody rigidbody)
+    {
+		List<Collision> collisions = new List<Collision>();
+
+		Collision collision = null;
+
+		foreach (Collider collider in activeColliders)
+			foreach (LineSegment line in collider.lines)
+			{
+				Vec2 ltb = rigidbody.gameObject.transform - line.start;
+				float ballDistance = ltb.Dot((line.end - line.start).Normal());
+
+				//compare distance with ball radius;
+				if (ballDistance < rigidbody.radius)
 				{
-					Vec2 ltb = rigidbody.gameObject.transform - line.start;
-					float ballDistance = ltb.Dot((line.end - line.start).Normal());   //HINT: it's NOT 10000
+					float a = (rigidbody.gameObject.oldTransform - line.start).Dot((line.end - line.start).Normal()) - rigidbody.radius;
+					float b = -rigidbody.gameObject.velocity.Dot((line.end - line.start).Normal());
+					float t = a / b;
+					//rigidbody.gameObject.position = rigidbody.gameObject.oldPosition + (rigidbody.gameObject.velocity * t);
+					Vec2 desiredPos = rigidbody.gameObject.oldTransform + (rigidbody.gameObject.velocity * t);
+					Vec2 lineVector = line.end - line.start;
+					float lineLength = lineVector.Length();
+					Vec2 bulletToLine = desiredPos - line.start;
+					float dotProduct = bulletToLine.Dot(lineVector.Normalized());
 
-					//compare distance with ball radius;
-					if (ballDistance < rigidbody.radius)
+					if (dotProduct > 0 && dotProduct < lineLength)
 					{
-						float a = (rigidbody.gameObject.oldTransform - line.start).Dot((line.end - line.start).Normal()) - rigidbody.radius;
-						float b = -rigidbody.gameObject.velocity.Dot((line.end - line.start).Normal());
-						float t = a / b;
-						//rigidbody.gameObject.position = rigidbody.gameObject.oldPosition + (rigidbody.gameObject.velocity * t);
-						Vec2 desiredPos = rigidbody.gameObject.oldTransform + (rigidbody.gameObject.velocity * t);
-						Vec2 lineVector = line.end - line.start;
-						float lineLength = lineVector.Length();
-						Vec2 bulletToLine = desiredPos - line.start;
-						float dotProduct = bulletToLine.Dot(lineVector.Normalized());
-
-						if (dotProduct > 0 && dotProduct < lineLength)
-						{
-
-							if (!collider.trigger)
-							{
-								rigidbody.gameObject.transform = desiredPos;
-								if (Approximate(t, 0))
-									rigidbody.gameObject.transform = rigidbody.gameObject.oldTransform + rigidbody.gameObject.velocity;
-								else
-									rigidbody.gameObject.velocity = rigidbody.gameObject.velocity.Reflect((line.end - line.start).Normal(), rigidbody.bounciness);
-								rigidbody.gameObject.transform = rigidbody.gameObject.oldTransform + (rigidbody.gameObject.velocity * (1 - t));
-								//rigidbody.gravity = new Vec2(0, 0);
-							}
-
-							rigidbody.gameObject.OnCollision(collider.gameObject);
-							collider.gameObject.OnCollision(rigidbody.gameObject);
-						}
-						else
-						{
-							rigidbody.gameObject.transform = rigidbody.gameObject.oldTransform + rigidbody.gameObject.velocity;
-							//rigidbody.gameObject.velocity *= 0;
-						}
+						collisions.Add(new Collision(t,rigidbody,line,collider));
 					}
 				}
+			}
+
+		foreach (Collision collision1 in collisions)
+        {
+            if (collision == null || collision1.t < collision.t)
+            {
+				collision = collision1;
+            }
+        }
+
+		return collision;
+    }
+
+	void ResolveCollision(Collision collision)
+	{
+		if (!collision.collider.trigger)
+		{
+			Vec2 desiredPos = collision.rigidbody.gameObject.oldTransform + (collision.rigidbody.gameObject.velocity * collision.t);
+			collision.rigidbody.gameObject.transform = desiredPos;
+			if (Approximate(collision.t, 0))
+				collision.rigidbody.gameObject.transform = collision.rigidbody.gameObject.oldTransform + collision.rigidbody.gameObject.velocity;
+			else
+				collision.rigidbody.gameObject.velocity = collision.rigidbody.gameObject.velocity.Reflect((collision.line.end - collision.line.start).Normal(), collision.rigidbody.bounciness);
+			collision.rigidbody.gameObject.transform = collision.rigidbody.gameObject.oldTransform + (collision.rigidbody.gameObject.velocity * (1 - collision.t));
+			//rigidbody.gravity = new Vec2(0, 0);
+		}
+
+		collision.rigidbody.gameObject.OnCollision(collision.collider.gameObject);
+		collision.collider.gameObject.OnCollision(collision.rigidbody.gameObject);
 	}
 	public static bool Approximate(Vec2 a, Vec2 b, float errorMargin = 0.01f)
 	{

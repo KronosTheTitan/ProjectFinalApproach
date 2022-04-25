@@ -84,6 +84,7 @@
     <Compile Include="GXPEngine\SoLoud\SoloudSoundSystem.cs" />
     <Compile Include="ECS\GameObjectECS.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="Systems\Collision.cs" />
     <Compile Include="Systems\CollisionManager.cs" />
     <Compile Include="Systems\UpdateManager.cs" />
     <Compile Include="Vec2.cs" />
