@@ -30,10 +30,7 @@ class CollisionManager
             }
 		}
 		foreach (Rigidbody rigidbody in activeRigidbodies)
-		{
 			foreach (Collider collider in activeColliders)
-			{
-				//Console.WriteLine(collider.lines.Length);
 				foreach (LineSegment line in collider.lines)
 				{
 					Vec2 ltb = rigidbody.gameObject.transform - line.start;
@@ -49,8 +46,8 @@ class CollisionManager
 						Vec2 desiredPos = rigidbody.gameObject.oldTransform + (rigidbody.gameObject.velocity * t);
 						Vec2 lineVector = line.end - line.start;
 						float lineLength = lineVector.Length();
-						Vec2 ObjectToLine = desiredPos - line.start;
-						float dotProduct = ObjectToLine.Dot(lineVector.Normalized());
+						Vec2 bulletToLine = desiredPos - line.start;
+						float dotProduct = bulletToLine.Dot(lineVector.Normalized());
 
 						if (dotProduct > 0 && dotProduct < lineLength)
 						{
@@ -58,8 +55,12 @@ class CollisionManager
 							if (!collider.trigger)
 							{
 								rigidbody.gameObject.transform = desiredPos;
-								rigidbody.gameObject.velocity = rigidbody.gameObject.velocity.Reflect((line.end - line.start).Normal(), rigidbody.bounciness);
+								if (Approximate(t, 0))
+									rigidbody.gameObject.transform = rigidbody.gameObject.oldTransform + rigidbody.gameObject.velocity;
+								else
+									rigidbody.gameObject.velocity = rigidbody.gameObject.velocity.Reflect((line.end - line.start).Normal(), rigidbody.bounciness);
 								rigidbody.gameObject.transform = rigidbody.gameObject.oldTransform + (rigidbody.gameObject.velocity * (1 - t));
+								//rigidbody.gravity = new Vec2(0, 0);
 							}
 
 							rigidbody.gameObject.OnCollision(collider.gameObject);
@@ -72,7 +73,18 @@ class CollisionManager
 						}
 					}
 				}
-			}
-        }
-    }
+	}
+	public static bool Approximate(Vec2 a, Vec2 b, float errorMargin = 0.01f)
+	{
+		return Approximate(a.x, b.x, errorMargin) && Approximate(a.y, b.y, errorMargin);
+	}
+
+	/// <summary>
+	/// A helper method for unit testing:
+	/// Returns true if and only if [a] and [b] differ by at most [errorMargin].
+	/// </summary>
+	public static bool Approximate(float a, float b, float errorMargin = 0.01f)
+	{
+		return Math.Abs(a - b) < errorMargin;
+	}
 }

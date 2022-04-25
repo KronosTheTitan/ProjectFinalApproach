@@ -8,10 +8,14 @@ class Player : Component
     public float speed = 5f;
     public float topSpeed = 10f;
     public float jumpForce = 10f;
+
+    Rigidbody rigidbody;
     public Player(GameObjectECS pGameObjectECS) : base(pGameObjectECS)
     {
         pGameObjectECS.AddComponent(new Component_Sprite(pGameObjectECS,"circle.png"));
-        pGameObjectECS.AddComponent(new Rigidbody(pGameObjectECS));
+
+        rigidbody = new Rigidbody(pGameObjectECS);
+        pGameObjectECS.AddComponent(rigidbody);
         ChunkLoader.Instance.loadedChunks.Add(gameObject.chunk);
         ChunkLoader.Instance.LoadNewChunks(gameObject.chunk.xPos, gameObject.chunk.yPos);
     }
@@ -34,6 +38,7 @@ class Player : Component
         if (Input.GetKey(Key.W)|Input.GetKeyDown(Key.SPACE))
         {
             gameObject.velocity += new Vec2(0, -jumpForce);
+            //rigidbody.gravity = new Vec2(0, 1);
         }
         if (Input.GetKey(Key.S) | Input.GetKeyDown(Key.SPACE))
         {

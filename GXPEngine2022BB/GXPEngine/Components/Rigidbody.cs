@@ -9,6 +9,9 @@ public class Rigidbody : Component
     public float weight;
     public float bounciness = 1;
     public float inertia = 0.75f;
+
+    public Vec2 gravity = new Vec2(0, 1);
+
     public Rigidbody(GameObjectECS gameObjectECS) : base(gameObjectECS)
     {
 
@@ -17,7 +20,7 @@ public class Rigidbody : Component
     {
         base.UpdateECS();
         gameObject.velocity *= inertia;
-        gameObject.velocity += new Vec2(0, 1);
+        gameObject.velocity += gravity; 
     }
     public override void OnChunkChange()
     {
