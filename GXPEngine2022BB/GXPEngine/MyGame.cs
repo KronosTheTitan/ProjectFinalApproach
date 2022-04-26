@@ -44,7 +44,7 @@ public class MyGame : Game
 			1,
 			0
 		};
-		Collider collider = new Collider(gameObject3, points, lines);
+		Collider collider = new PolygonCollider(gameObject3, points, lines);
 		//LevelLoader.LoadLevel("document.xml");
 	}
 

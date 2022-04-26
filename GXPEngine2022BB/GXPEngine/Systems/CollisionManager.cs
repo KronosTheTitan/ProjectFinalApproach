@@ -12,7 +12,7 @@ class CollisionManager
 
     }
 
-    public List<Collider> activeColliders = new List<Collider>();
+    public List<PolygonCollider> activeColliders = new List<PolygonCollider>();
     public List<Rigidbody> activeRigidbodies = new List<Rigidbody>();
 
     public void OnStep()
@@ -34,12 +34,7 @@ class CollisionManager
 			Collision collision = FindEarliestCollision(rigidbody);
             if (collision != null)
             {
-				ResolveCollision(collision);
-				Console.WriteLine(collision.t);
-                if (Approximate(collision.t,0))
-                {
-					rigidbody.gameObject.transform += (collision.line.end-collision.line.start).Normal(); 
-                }
+				collision.ResolveCollision();
             }
         }
 	}
@@ -50,7 +45,7 @@ class CollisionManager
 
 		Collision collision = null;
 
-		foreach (Collider collider in activeColliders)
+		foreach (PolygonCollider collider in activeColliders)
 			foreach (LineSegment line in collider.lines)
 			{
 				Vec2 ltb = rigidbody.gameObject.transform - line.start;
@@ -71,7 +66,7 @@ class CollisionManager
 
 					if (dotProduct > 0 && dotProduct < lineLength)
 					{
-						collisions.Add(new Collision(t,rigidbody,line,collider));
+						collisions.Add(new CollisionRC(rigidbody,collider,line,t));
 					}
 				}
 			}
@@ -86,35 +81,4 @@ class CollisionManager
 
 		return collision;
     }
-
-	void ResolveCollision(Collision collision)
-	{
-		if (!collision.collider.trigger)
-		{
-			Vec2 desiredPos = collision.rigidbody.gameObject.oldTransform + (collision.rigidbody.gameObject.velocity * collision.t);
-			collision.rigidbody.gameObject.transform = desiredPos;
-			if (Approximate(collision.t, 0))
-				collision.rigidbody.gameObject.transform = collision.rigidbody.gameObject.oldTransform + collision.rigidbody.gameObject.velocity;
-			else
-				collision.rigidbody.gameObject.velocity = collision.rigidbody.gameObject.velocity.Reflect((collision.line.end - collision.line.start).Normal(), collision.rigidbody.bounciness);
-			collision.rigidbody.gameObject.transform = collision.rigidbody.gameObject.oldTransform + (collision.rigidbody.gameObject.velocity * (1 - collision.t));
-			//rigidbody.gravity = new Vec2(0, 0);
-		}
-
-		collision.rigidbody.gameObject.OnCollision(collision.collider.gameObject);
-		collision.collider.gameObject.OnCollision(collision.rigidbody.gameObject);
-	}
-	public static bool Approximate(Vec2 a, Vec2 b, float errorMargin = 0.01f)
-	{
-		return Approximate(a.x, b.x, errorMargin) && Approximate(a.y, b.y, errorMargin);
-	}
-
-	/// <summary>
-	/// A helper method for unit testing:
-	/// Returns true if and only if [a] and [b] differ by at most [errorMargin].
-	/// </summary>
-	public static bool Approximate(float a, float b, float errorMargin = 0.01f)
-	{
-		return Math.Abs(a - b) < errorMargin;
-	}
 }

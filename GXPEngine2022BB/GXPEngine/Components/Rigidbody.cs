@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using GXPEngine;
-public class Rigidbody : Component
+public class Rigidbody : Collider
 {
     public float radius=5;
     public float weight;

@@ -205,6 +205,19 @@ namespace GXPEngine
 		public static float Clamp(float f, float min, float max) {
 			return f < min ? min : (f > max ? max : f);
 		}
+		public static bool Approximate(Vec2 a, Vec2 b, float errorMargin = 0.01f)
+		{
+			return Approximate(a.x, b.x, errorMargin) && Approximate(a.y, b.y, errorMargin);
+		}
+
+		/// <summary>
+		/// A helper method for unit testing:
+		/// Returns true if and only if [a] and [b] differ by at most [errorMargin].
+		/// </summary>
+		public static bool Approximate(float a, float b, float errorMargin = 0.01f)
+		{
+			return Math.Abs(a - b) < errorMargin;
+		}
 
 	}
 }
