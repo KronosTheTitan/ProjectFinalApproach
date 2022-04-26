@@ -1,13 +1,19 @@
 using System;                                   // System contains a lot of default C# libraries
 using System.Collections.Generic;
 using GXPEngine;                                // GXPEngine contains the engine
-using System.Drawing;							// System.Drawing contains drawing tools such as Color definitions
+using System.Drawing;                           // System.Drawing contains drawing tools such as Color definitions
+using GXPEngine.ECS;
+using static GXPEngine.ECS.EntityComponent;
 
 public class MyGame : Game
 {
 	public List<GameObjectECS> gameObjects = new List<GameObjectECS>();
+
+	Manager manager;
 	public MyGame() : base(800, 600, false)		// Create a window that's 800x600 and NOT fullscreen
 	{
+		manager = new Manager(this);
+
 		// Draw some things on a canvas:
 		EasyDraw canvas = new EasyDraw(800, 600);
 		canvas.Clear(Color.MediumPurple);
@@ -45,6 +51,9 @@ public class MyGame : Game
 			0
 		};
 		Collider collider = new PolygonCollider(gameObject3, points, lines);
+
+		Entity e = manager.addEntity();
+		e.addComponent<KeyboardComponent>();
 		//LevelLoader.LoadLevel("document.xml");
 	}
 

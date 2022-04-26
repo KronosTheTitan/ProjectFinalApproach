@@ -32,21 +32,24 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Collision.cs" />
+    <Compile Include="src\Collision.cs" />
     <Compile Include="Components\BulletComponent.cs" />
-    <Compile Include="Chunk.cs" />
+    <Compile Include="src\Chunk.cs" />
     <Compile Include="Components\PolygonCollider.cs" />
+    <Compile Include="src\ECS\Components\KeyboardComponent.cs" />
+    <Compile Include="src\ECS\EntityComponent.cs" />
     <Compile Include="Systems\ChunkLoader.cs" />
     <Compile Include="Components\Collider.cs" />
     <Compile Include="Components\Interactive.cs" />
-    <Compile Include="GameManager.cs" />
-    <Compile Include="LevelLoader.cs" />
+    <Compile Include="src\GameManager.cs" />
+    <Compile Include="src\LevelLoader.cs" />
     <Compile Include="Components\Rigidbody.cs" />
-    <Compile Include="LineSegment.cs" />
+    <Compile Include="src\LineSegment.cs" />
     <Compile Include="Components\Player.cs" />
     <Compile Include="ECS\Component.cs" />
     <Compile Include="Components\Component_Sprite.cs" />
@@ -85,11 +88,11 @@
     <Compile Include="GXPEngine\SoLoud\Soloud.cs" />
     <Compile Include="GXPEngine\SoLoud\SoloudSoundSystem.cs" />
     <Compile Include="ECS\GameObjectECS.cs" />
-    <Compile Include="Settings.cs" />
+    <Compile Include="src\Settings.cs" />
     <Compile Include="Systems\CollisionManager.cs" />
     <Compile Include="Systems\CollisionRC.cs" />
     <Compile Include="Systems\UpdateManager.cs" />
-    <Compile Include="Vec2.cs" />
+    <Compile Include="src\Vec2.cs" />
   </ItemGroup>
   <ItemGroup />
 </Project>
