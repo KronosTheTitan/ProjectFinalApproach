@@ -11,6 +11,8 @@ namespace GXPEngine.ECS
     {
         internal static string[] componentIds = new string[32];
 
+        internal static ComponentID lastID = 0u;
+
         public class Component
         {
             public Entity entity;
@@ -32,9 +34,7 @@ namespace GXPEngine.ECS
             private Component[] componentArray = new Component[32];
             private bool[] componentBitSet = new bool[32];
 
-            private static ComponentID lastID = 0u;
-
-            private static ComponentID getNewComponentTypeID()
+            private ComponentID getNewComponentTypeID()
             {
                 return lastID++;
             }
@@ -46,7 +46,7 @@ namespace GXPEngine.ECS
                 {
                     if (s == null) continue;
                     if (!componentIds.Contains(typeof(T).Name) || s.Length == 0) continue;
-                    return (UInt32)Array.FindIndex(componentIds, x => (x.Length > 0) && (x != null) && (x.Contains(typeof(T).Name)));
+                    return (ComponentID)Array.FindIndex(componentIds, x => (x.Length > 0) && (x != null) && (x.Contains(typeof(T).Name)));
                 }
                 typeID = getNewComponentTypeID();
                 Console.WriteLine("Type ID: " + typeID);
@@ -63,6 +63,9 @@ namespace GXPEngine.ECS
 
             public void destroy() { active = false; }
 
+            public virtual void update()
+            {
+            }
 
             public bool hasComponent<T>()
             {
@@ -105,6 +108,7 @@ namespace GXPEngine.ECS
                 {
                     c.update();
                 }
+                update();
             }
         }
 
@@ -124,12 +128,18 @@ namespace GXPEngine.ECS
                 entities.RemoveAll(mEntity => !mEntity.isActive());
             }
 
-            public Entity addEntity()
+            public Entity addEntity(string filename)
             {
-                Entity e = new Entity("checkers.png");
+                Entity e = new Entity(filename);
                 entities.Add(e);
                 Game.main.AddChild(e);
                 return e;
+            }
+
+            public void addEntity(Entity e)
+            {
+                entities.Add(e);
+                Game.main.AddChild(e);
             }
         }
     }

@@ -10,7 +10,6 @@ D:\07 School\ProjectFinalApproach\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEng
 D:\07 School\ProjectFinalApproach\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEngine.csproj.CoreCompileInputs.cache
 D:\07 School\ProjectFinalApproach\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEngine.exe
 D:\07 School\ProjectFinalApproach\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEngine.pdb
-C:\Projecten\GitHub\ProjectFinalApproach\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEngine.csproj.AssemblyReference.cache
 C:\Projecten\GitHub\ProjectFinalApproach\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEngine.csproj.CoreCompileInputs.cache
 C:\Projecten\GitHub\ProjectFinalApproach\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEngine.exe
 C:\Projecten\GitHub\ProjectFinalApproach\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEngine.pdb

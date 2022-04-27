@@ -49,7 +49,7 @@ namespace GXPEngine
 		/// <param name="addCollider">
 		/// If <c>true</c>, this sprite will have a collider that will be added to the collision manager.
 		/// </param> 
-		public AnimationSprite (string filename, int cols, int rows, int frames=-1, bool keepInCache=false) : base(filename,keepInCache)
+		public AnimationSprite (string filename, int cols, int rows, int frames=-1, bool keepInCache=false, bool addCollider=true) : base(filename,keepInCache,addCollider)
 		{
 			name = filename;
 			initializeAnimFrames(cols, rows, frames);

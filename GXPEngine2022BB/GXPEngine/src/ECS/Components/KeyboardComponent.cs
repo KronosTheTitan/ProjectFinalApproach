@@ -24,7 +24,6 @@ namespace GXPEngine
 
         public override void update()
         {
-            Console.WriteLine("test");
             KeyUpdate();
             if (!((moveLeft ^ moveRight) || (moveUp ^ moveDown))) return;
             if (moveUp ^ moveDown) entity.y += (moveUp ? -3 : 3);
