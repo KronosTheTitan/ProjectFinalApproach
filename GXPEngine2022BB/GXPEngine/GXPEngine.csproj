@@ -40,6 +40,7 @@
     <Compile Include="src\ECS\Components\KeyboardComponent.cs" />
     <Compile Include="src\ECS\EntityComponent.cs" />
     <Compile Include="src\Entity\Player.cs" />
+    <Compile Include="src\GraplingHook\Rope.cs" />
     <Compile Include="src\Utils\Vec2.cs" />
     <Compile Include="MyGame.cs" />
     <Compile Include="MyGame.cs" />

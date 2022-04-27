@@ -41,10 +41,10 @@ namespace GXPEngine.ECS
             moveRight = Input.GetKey(Key.D);
             moveDown = Input.GetKey(Key.S);
 
-            if (Input.GetKey(Key.SPACE))
-            {
-                _velocity.y = -20;
-            }
+            //if (Input.GetKey(Key.SPACE))
+            //{
+            //    _velocity.y = -20;
+            //}
         }
 
         private void Controlls()
