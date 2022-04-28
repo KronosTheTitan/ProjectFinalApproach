@@ -7,7 +7,7 @@ public class Rigidbody : Collider
 {
     public float radius=5;
     public float weight;
-    public float bounciness = 1;
+    public float bounciness = 0f;
     public float inertia = 0.75f;
 
     public Vec2 gravity = new Vec2(0, 1);
@@ -20,7 +20,8 @@ public class Rigidbody : Collider
     {
         base.UpdateECS();
         gameObject.velocity *= inertia;
-        gameObject.velocity += gravity; 
+        gameObject.velocity += gravity;
+        //Console.WriteLine(gameObject.velocity.ToString());
     }
     public override void OnChunkChange()
     {

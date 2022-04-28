@@ -15,5 +15,6 @@ class CollisionRR : Collision
 	}
 	public override void ResolveCollision()
 	{
+
 	}
 }

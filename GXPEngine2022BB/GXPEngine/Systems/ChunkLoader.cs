@@ -23,9 +23,9 @@ class ChunkLoader
 
     public int maxX = 3;
     public int maxY = 3;
-    public int chunkSize = 512;
+    public int chunkSize = 2048;
     public Chunk[,] chunks;
-    int loadRange = 1;
+    int loadRange = 3;
 
     public delegate void LateUpdatesDelegate();
     public event LateUpdatesDelegate LateUpdates;

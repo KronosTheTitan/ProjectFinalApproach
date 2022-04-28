@@ -23,11 +23,16 @@ public class MyGame : Game
 		Console.WriteLine("MyGame initialized");
 		ChunkLoader.Instance.Start();
 		GameObjectECS gameObject = new GameObjectECS();
+		gameObject.transform = new Vec2(400, 0);
 		gameObjects.Add(gameObject);
 		//gameObject.transform = new Vec2(width / 2, height / 2);
 		Player player = new Player(gameObject);
 
-		//GameObjectECS gameObject2 = new GameObjectECS();
+		GameObjectECS gameObject2 = new GameObjectECS();
+		Component_Sprite sprite = new Component_Sprite(gameObject2, "circle.png");
+		Rigidbody rigidbody = new Rigidbody(gameObject2);
+		rigidbody.radius = sprite.sprite.width / 2;
+		gameObject2.transform = new Vec2(width / 2, height / 4);
 
 		//Bullet_Component bullet = new Bullet_Component(gameObject2);
 
@@ -37,12 +42,17 @@ public class MyGame : Game
 		Vec2[] points =
 		{
 			new Vec2(0,height/2),
-			new Vec2(width,height/2)
+			new Vec2(width,height/2),
+			new Vec2(width,0),
+			new Vec2(width-width/8,height/4)
 		};
 		int[] lines =
 		{
 			1,
-			0
+			0,
+
+			2,
+			3
 		};
 		Collider collider = new PolygonCollider(gameObject3, points, lines);
 		//LevelLoader.LoadLevel("document.xml");
