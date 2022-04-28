@@ -6,8 +6,8 @@ using GXPEngine;
 public class GameObjectECS
 {
     List<Component> components = new List<Component>();
-    List<GameObject> childeren = new List<GameObject>();
-    GameObject parent = null;
+    List<GameObjectECS> childeren = new List<GameObjectECS>();
+    GameObjectECS parent = null;
 
     public Chunk chunk;
     public Chunk newChunk;
@@ -40,9 +40,9 @@ public class GameObjectECS
     public List<Component> GetComponentsInChilderen(Type type)
     {
         List<Component> output = new List<Component>();
-        foreach (GameObject child in childeren)
+        foreach (GameObjectECS child in childeren)
         {
-            output.AddRange(GetComponentsInChilderen(type));
+            output.AddRange(child.GetComponentsInChilderen(type));
         }
         output.AddRange(GetComponent(type));
         return output;
