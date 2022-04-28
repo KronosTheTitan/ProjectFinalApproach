@@ -10,9 +10,9 @@ namespace GXPEngine.ECS
     {
         private bool moveLeft, moveRight, moveUp, moveDown;
 
-        private Vec2 _velocity, _position;
+        public Vec2 _velocity, _position;
 
-        private Vec2 _oldVelocity, _oldPosition;
+        public Vec2 _oldVelocity, _oldPosition;
 
         private Vec2 _acceleration, _input;
         bool grounded = true;
@@ -41,10 +41,10 @@ namespace GXPEngine.ECS
             moveRight = Input.GetKey(Key.D);
             moveDown = Input.GetKey(Key.S);
 
-            //if (Input.GetKey(Key.SPACE))
-            //{
-            //    _velocity.y = -20;
-            //}
+            if (Input.GetKey(Key.SPACE))
+            {
+                _velocity.y = -20;
+            }
         }
 
         private void Controlls()
