@@ -35,6 +35,6 @@ public class Exporter : MonoBehaviour
             }
             element1.AppendChild(gameObjectXML);
         }
-        doc.Save("D:/document.xml");
+        doc.Save(exportPath);
     }
 }
