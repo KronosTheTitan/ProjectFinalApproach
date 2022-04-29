@@ -74,11 +74,19 @@ public class MyGame : Game
 
     float ropeLengthOld;
 
-    public float nextGrappleLenght()
+    public float NextGrappleLenght()
     {
         if (grappleOrign.Length() < ropeLength) return grappleOrign.Length();
         if (ropeLengthOld >= ropeLength) return ropeLengthOld *= .97f;
         return ropeLength;
+    }
+
+    public float NextRopeAccelerationInput()
+    {
+        if (ropeAngle > -0.872664626) return 0f;
+        if (ropeAngle < -2.2689280276) return 0f;
+        if (!(Input.GetKey(Key.D) ^ Input.GetKey(Key.A))) return 0f;
+        return Input.GetKey(Key.A) ? -0.1f : 0.1f;
     }
 
     void LateUpdate()
@@ -102,22 +110,25 @@ public class MyGame : Game
         lines.ClearTransparent();
         if (!Input.GetMouseButton(0)) return;
         if (!canvas3.HitTestPoint(Input.mouseX, Input.mouseY)) return;
-
-        float ropeAcceleration = -.005f * (Mathf.Cos(ropeAngle) + (Input.GetKey(Key.D) ^ Input.GetKey(Key.A) ? Input.GetKey(Key.A) ? -1 : 1 : 0));
+        //Console.WriteLine(NextRopeAccelerationInput());
+        float ropeAcceleration = -.005f * (Mathf.Cos(ropeAngle) + NextRopeAccelerationInput());
 
         ropeAngleVelocity += ropeAcceleration;
+        //Console.WriteLine(ropeAngle);
         ropeAngle += ropeAngleVelocity;
+
+        //Console.WriteLine(ropeAngleVelocity);
 
         ropeAngleVelocity *= .99f;
 
         Vec2 v = Vec2.GetUnitVectorRad(ropeAngle - Mathf.PI);
 
-        v *= nextGrappleLenght();
+        v *= NextGrappleLenght();
 
 
         rope = grapple + v;
 
-        Vec2 speed = rope - new Vec2(e.x, e.y);
+        Vec2 speed = rope - new Vec2(e.x + e.width / 2, e.y + e.height / 2);
         e._velocity = speed;
 
         lines.Line(grapple.x, grapple.y, rope.x, rope.y);
