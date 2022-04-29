@@ -74,13 +74,14 @@ public class MyGame : Game
 
     float ropeLengthOld;
 
-    public float easeInOutQuad(float x, float t, float b, float c, float d) 
+    public float nextGrappleLenght()
     {
-        if ((t/=d/2) < 1) return c/2*t* t + b;
-        return -c/2 * ((--t)*(t-2) - 1) + b;
+        if (grappleOrign.Length() < ropeLength) return grappleOrign.Length();
+        if (ropeLengthOld >= ropeLength) return ropeLengthOld *= .97f;
+        return ropeLength;
     }
 
-void LateUpdate()
+    void LateUpdate()
     {        
         if (Input.GetMouseButtonDown(0))
         {
@@ -111,47 +112,7 @@ void LateUpdate()
 
         Vec2 v = Vec2.GetUnitVectorRad(ropeAngle - Mathf.PI);
 
-        //if (grappleOrign.Length() < ropeLength)
-        //{
-        //    v *= grappleOrign.Length();
-        //} else
-        //{
-        //    //Console.WriteLine(ropeLengthOld + " " + grappleOrign.Length());
-        //    if (ropeLengthOld >= ropeLength)
-        //    {
-        //        //float SiegFriet = grappleOrign.Length() - ropeLength;
-        //        //float Alfred = ropeLengthOld - ropeLength - 20;
-        //        //float Wilma = SiegFriet / 100;
-        //        //Console.WriteLine(Alfred);
-        //        //Console.WriteLine(SiegFriet);
-        //        //float Leopold = (Alfred - SiegFriet) / SiegFriet;
-        //        //Console.WriteLine("test");
-        //        //Console.WriteLine(Leopold);
-        //        //ropeLengthOld += Leopold * 15;
-        //        ropeLengthOld *= .97f;
-        //        v *= ropeLengthOld;
-
-        //    } else
-        //    {
-        //        v *= ropeLength;
-        //    }
-        //}
-        if (grappleOrign.Length() < ropeLength)
-        {
-            v *= grappleOrign.Length();
-        }
-        else
-        {
-            if (ropeLengthOld >= ropeLength)
-            {
-                ropeLengthOld *= .97f;
-                v *= ropeLengthOld;
-            }
-            else
-            {
-                v *= ropeLength;
-            }
-        }
+        v *= nextGrappleLenght();
 
 
         rope = grapple + v;
