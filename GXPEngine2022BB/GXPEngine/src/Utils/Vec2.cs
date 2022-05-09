@@ -6,10 +6,24 @@ public struct Vec2
     public float x;
     public float y;
 
-    public Vec2(float x, float y)
+    public Vec2(float pX, float pY)
     {
-        this.x = x;
-        this.y = y;
+        this.x = pX;
+        this.y = pY;
+    }
+    public float Dot(Vec2 other)
+    {
+        return x * other.x + y * other.y;
+    }
+    public Vec2 Normal()
+    {
+        Vec2 output = new Vec2(x * 0 - y * 1, x * 1 + y * 0);
+        output.Normalize();
+        return output;
+    }
+    public Vec2 Reflect(Vec2 pNormal, float pBounciness = 1)
+    {
+        return this - (1 + pBounciness) * Dot(pNormal) * pNormal;
     }
 
     public Vec2 Zero()
@@ -87,6 +101,13 @@ public struct Vec2
     }
 
     public static Vec2 operator *(Vec2 v, float f)
+    {
+        v.x *= f;
+        v.y *= f;
+        return v;
+    }
+
+    public static Vec2 operator *(float f, Vec2 v)
     {
         v.x *= f;
         v.y *= f;
