@@ -12,7 +12,7 @@ class CollisionManager
 
     }
 
-    public List<Collider> activeColliders = new List<Collider>();
+    public List<PolygonCollider> activeColliders = new List<PolygonCollider>();
     public List<Rigidbody> activeRigidbodies = new List<Rigidbody>();
 
     public void OnStep()
@@ -34,12 +34,7 @@ class CollisionManager
 			Collision collision = FindEarliestCollision(rigidbody);
             if (collision != null)
             {
-				ResolveCollision(collision);
-				Console.WriteLine(collision.t);
-                if (Approximate(collision.t,0))
-                {
-					rigidbody.gameObject.transform += (collision.line.end-collision.line.start).Normal(); 
-                }
+				collision.ResolveCollision();
             }
         }
 	}
@@ -50,7 +45,7 @@ class CollisionManager
 
 		Collision collision = null;
 
-		foreach (Collider collider in activeColliders)
+		foreach (PolygonCollider collider in activeColliders)
 			foreach (LineSegment line in collider.lines)
 			{
 				Vec2 ltb = rigidbody.gameObject.transform - line.start;
@@ -69,12 +64,18 @@ class CollisionManager
 					Vec2 bulletToLine = desiredPos - line.start;
 					float dotProduct = bulletToLine.Dot(lineVector.Normalized());
 
-					if (dotProduct > 0 && dotProduct < lineLength)
+					if (dotProduct > 0-rigidbody.radius && dotProduct < lineLength+rigidbody.radius && (a>0&&b>0))
 					{
-						collisions.Add(new Collision(t,rigidbody,line,collider));
+						collisions.Add(new CollisionRC(rigidbody,collider,line,t));
 					}
 				}
 			}
+		foreach (Rigidbody rigidbody1 in activeRigidbodies)
+		{
+			if (rigidbody == rigidbody1) continue;
+			RtRCheck(rigidbody, rigidbody1);
+
+		}
 
 		foreach (Collision collision1 in collisions)
         {
@@ -86,35 +87,35 @@ class CollisionManager
 
 		return collision;
     }
-
-	void ResolveCollision(Collision collision)
-	{
-		if (!collision.collider.trigger)
+	Collision RtRCheck(Rigidbody rigidbody,Rigidbody rigidbody1)
+    {
+		if ((rigidbody.transform - rigidbody1.transform).Length() < rigidbody.radius + rigidbody1.radius)
 		{
-			Vec2 desiredPos = collision.rigidbody.gameObject.oldTransform + (collision.rigidbody.gameObject.velocity * collision.t);
-			collision.rigidbody.gameObject.transform = desiredPos;
-			if (Approximate(collision.t, 0))
-				collision.rigidbody.gameObject.transform = collision.rigidbody.gameObject.oldTransform + collision.rigidbody.gameObject.velocity;
-			else
-				collision.rigidbody.gameObject.velocity = collision.rigidbody.gameObject.velocity.Reflect((collision.line.end - collision.line.start).Normal(), collision.rigidbody.bounciness);
-			collision.rigidbody.gameObject.transform = collision.rigidbody.gameObject.oldTransform + (collision.rigidbody.gameObject.velocity * (1 - collision.t));
-			//rigidbody.gravity = new Vec2(0, 0);
+			float a = rigidbody.gameObject.velocity.Length() * rigidbody.gameObject.velocity.Length();
+
+			Vec2 u = rigidbody.transform - rigidbody1.transform;
+
+			//float b = 2 * (u.Dot(rigidbody.gameObject.velocity));
+			float b = 2 * (rigidbody.gameObject.velocity.Dot(u));
+
+			float c = (u.Length() * u.Length()) - ((rigidbody.radius + rigidbody1.radius) * (rigidbody.radius + rigidbody1.radius));
+
+			Console.WriteLine("a = " + a.ToString() + " : b = " + b.ToString() + " : c = " + c.ToString());
+
+			if (Mathf.Approximate(a,0)) return null;
+
+			float d = (b * b) - (4 * a * c);
+
+			float t = (-b - Mathf.Sqrt(d)) / (2 * a);
+
+			//if (t < 0) return null;
+
+			rigidbody.gameObject.transform = rigidbody.gameObject.oldTransform + (rigidbody.gameObject.velocity * t);
+
+			//Console.WriteLine("hit : " + t + " : " + rigidbody1.transform.ToString());
+
+			return new CollisionRR(rigidbody, rigidbody1, t);
 		}
-
-		collision.rigidbody.gameObject.OnCollision(collision.collider.gameObject);
-		collision.collider.gameObject.OnCollision(collision.rigidbody.gameObject);
-	}
-	public static bool Approximate(Vec2 a, Vec2 b, float errorMargin = 0.01f)
-	{
-		return Approximate(a.x, b.x, errorMargin) && Approximate(a.y, b.y, errorMargin);
-	}
-
-	/// <summary>
-	/// A helper method for unit testing:
-	/// Returns true if and only if [a] and [b] differ by at most [errorMargin].
-	/// </summary>
-	public static bool Approximate(float a, float b, float errorMargin = 0.01f)
-	{
-		return Math.Abs(a - b) < errorMargin;
+		return null;
 	}
 }

@@ -5,17 +5,21 @@ using System.Text;
 using GXPEngine;
 class Player : Component
 {
-    public float speed = 5f;
+    public float speed = 10f;
     public float topSpeed = 10f;
-    public float jumpForce = 10f;
+    public float jumpForce = 50f;
 
     Rigidbody rigidbody;
     public Player(GameObjectECS pGameObjectECS) : base(pGameObjectECS)
     {
-        pGameObjectECS.AddComponent(new Component_Sprite(pGameObjectECS,"circle.png"));
+        Component_Sprite sprite = new Component_Sprite(pGameObjectECS, "circle.png");
+        pGameObjectECS.AddComponent(sprite);
 
         rigidbody = new Rigidbody(pGameObjectECS);
         pGameObjectECS.AddComponent(rigidbody);
+
+        rigidbody.radius = sprite.sprite.height / 2;
+
         ChunkLoader.Instance.loadedChunks.Add(gameObject.chunk);
         ChunkLoader.Instance.LoadNewChunks(gameObject.chunk.xPos, gameObject.chunk.yPos);
     }
@@ -37,7 +41,7 @@ class Player : Component
         }
         if (Input.GetKey(Key.W)||Input.GetKeyDown(Key.SPACE))
         {
-            gameObject.velocity += new Vec2(0, -jumpForce);
+            gameObject.velocity += new Vec2(0, -speed);
             //rigidbody.gravity = new Vec2(0, 1);
         }
         if (Input.GetKey(Key.S) || Input.GetKeyDown(Key.SPACE))

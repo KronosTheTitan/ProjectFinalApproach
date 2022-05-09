@@ -36,8 +36,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collision.cs" />
     <Compile Include="Components\BulletComponent.cs" />
     <Compile Include="Chunk.cs" />
+    <Compile Include="Components\PolygonCollider.cs" />
     <Compile Include="Systems\ChunkLoader.cs" />
     <Compile Include="Components\Collider.cs" />
     <Compile Include="Components\Interactive.cs" />
@@ -84,8 +86,9 @@
     <Compile Include="GXPEngine\SoLoud\SoloudSoundSystem.cs" />
     <Compile Include="ECS\GameObjectECS.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="Systems\Collision.cs" />
     <Compile Include="Systems\CollisionManager.cs" />
+    <Compile Include="Systems\CollisionRC.cs" />
+    <Compile Include="Systems\CollisionRR.cs" />
     <Compile Include="Systems\UpdateManager.cs" />
     <Compile Include="Vec2.cs" />
   </ItemGroup>

@@ -7,8 +7,8 @@ public class Rigidbody : Component
 {
     public float radius=5;
     public float weight;
-    public float bounciness = 1f;
-    public float inertia = .7f;
+    public float bounciness = 0f;
+    public float inertia = 0.75f;
 
     public Vec2 gravity = new Vec2(0, 1);
 

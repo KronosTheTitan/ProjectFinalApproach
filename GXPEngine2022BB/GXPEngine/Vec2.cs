@@ -40,6 +40,10 @@ public struct Vec2
     {
         return new Vec2(left.x / right, left.y / right);
     }
+    public override string ToString()
+    {
+        return String.Format("({0},{1})", x, y);
+    }
     public float Length()
     {
         return Mathf.Sqrt((x * x) + (y * y));
