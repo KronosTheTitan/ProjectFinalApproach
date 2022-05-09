@@ -16,6 +16,7 @@ namespace GXPEngine
 		private GLContext _glContext;
 
 		private UpdateManager _updateManager;
+		private CollisionManager _collisionManager;
 
 		/// <summary>
 		/// Step delegate defines the signature of a method used for step callbacks, see OnBeforeStep, OnAfterStep.
@@ -110,6 +111,7 @@ namespace GXPEngine
 
 				main = this;
 				_updateManager = new UpdateManager ();
+				_collisionManager = new CollisionManager ();
 				_glContext = new GLContext (this);
 				_glContext.CreateWindow (pWidth, pHeight, pFullScreen, pVSync, pRealWidth, pRealHeight);
 
@@ -182,6 +184,7 @@ namespace GXPEngine
 			if (OnBeforeStep != null)
 				OnBeforeStep ();
 			_updateManager.Step ();
+			_collisionManager.Step ();
 			if (OnAfterStep != null)
 				OnAfterStep ();
 		}
@@ -215,6 +218,7 @@ namespace GXPEngine
 		internal void Add (GameObject gameObject)
 		{
 			_updateManager.Add (gameObject);
+			_collisionManager.Add (gameObject);
 		}
 		
 		//------------------------------------------------------------------------------------------------------------------------
@@ -226,6 +230,15 @@ namespace GXPEngine
 		internal void Remove (GameObject gameObject)
 		{
 			_updateManager.Remove (gameObject);
+			_collisionManager.Remove (gameObject);
+		}
+
+		//------------------------------------------------------------------------------------------------------------------------
+		//														GetGameObjectCollisions()
+		//------------------------------------------------------------------------------------------------------------------------
+		internal GameObject[] GetGameObjectCollisions (GameObject gameObject, bool includeTriggers = true, bool includeSolid = true)
+		{
+			return _collisionManager.GetCurrentCollisions(gameObject, includeTriggers, includeSolid);
 		}
 
 
@@ -298,7 +311,8 @@ namespace GXPEngine
 			output += "OnBeforeStep delegates: "+(OnBeforeStep==null?0:OnBeforeStep.GetInvocationList().Length)+'\n';
 			output += "OnAfterStep delegates: "+(OnAfterStep==null?0:OnAfterStep.GetInvocationList().Length)+'\n';
 			output += "OnAfterRender delegates: "+(OnAfterRender==null?0:OnAfterRender.GetInvocationList().Length)+'\n';
-			output += Texture2D.GetDiagnostics (); 
+			output += Texture2D.GetDiagnostics ();
+			output += _collisionManager.GetDiagnostics (); 
 			output += _updateManager.GetDiagnostics (); 
 			return output;
 		}

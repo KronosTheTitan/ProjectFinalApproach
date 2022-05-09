@@ -32,26 +32,17 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Collision.cs" />
-    <Compile Include="Components\BulletComponent.cs" />
-    <Compile Include="Chunk.cs" />
-    <Compile Include="Components\PolygonCollider.cs" />
-    <Compile Include="Systems\ChunkLoader.cs" />
-    <Compile Include="Components\Collider.cs" />
-    <Compile Include="Components\Interactive.cs" />
-    <Compile Include="GameManager.cs" />
-    <Compile Include="LevelLoader.cs" />
-    <Compile Include="Components\Rigidbody.cs" />
-    <Compile Include="LineSegment.cs" />
-    <Compile Include="Components\Player.cs" />
-    <Compile Include="ECS\Component.cs" />
-    <Compile Include="Components\Component_Sprite.cs" />
-    <Compile Include="GXPEngine\AddOns\Gizmos.cs" />
-    <Compile Include="GXPEngine\AddOns\SpriteBatch.cs" />
+    <Compile Include="src\ECS\Components\KeyboardComponent.cs" />
+    <Compile Include="src\ECS\EntityComponent.cs" />
+    <Compile Include="src\Entity\Player.cs" />
+    <Compile Include="src\GraplingHook\Rope.cs" />
+    <Compile Include="src\Utils\Vec2.cs" />
+    <Compile Include="MyGame.cs" />
     <Compile Include="MyGame.cs" />
     <Compile Include="GXPEngine\Core\Canvas.cs" />
     <Compile Include="GXPEngine\Game.cs" />
@@ -60,12 +51,15 @@
     <Compile Include="GXPEngine\SoundChannel.cs" />
     <Compile Include="GXPEngine\Sprite.cs" />
     <Compile Include="GXPEngine\Core\BlendMode.cs" />
+    <Compile Include="GXPEngine\Core\BoxCollider.cs" />
+    <Compile Include="GXPEngine\Core\Collider.cs" />
     <Compile Include="GXPEngine\Core\GLContext.cs" />
     <Compile Include="GXPEngine\Core\Rectangle.cs" />
     <Compile Include="GXPEngine\Core\Texture2D.cs" />
     <Compile Include="GXPEngine\Core\Transformable.cs" />
     <Compile Include="GXPEngine\Core\Vector2.cs" />
     <Compile Include="GXPEngine\FMOD\FMOD.cs" />
+    <Compile Include="GXPEngine\Managers\CollisionManager.cs" />
     <Compile Include="GXPEngine\Managers\UpdateManager.cs" />
     <Compile Include="GXPEngine\OpenGL\GL.cs" />
     <Compile Include="GXPEngine\Pivot.cs" />
@@ -73,13 +67,16 @@
     <Compile Include="GXPEngine\Utils\Mathf.cs" />
     <Compile Include="GXPEngine\Utils\Input.cs" />
     <Compile Include="GXPEngine\Utils\Key.cs" />
+    <Compile Include="GXPEngine\AddOns\MouseHandler.cs" />
     <Compile Include="GXPEngine\Utils\Time.cs" />
     <Compile Include="GXPEngine\Utils\Utils.cs" />
     <Compile Include="GXPEngine\AddOns\Camera.cs" />
     <Compile Include="GXPEngine\Managers\HierarchyManager.cs" />
     <Compile Include="GXPEngine\AddOns\Settings.cs" />
+    <Compile Include="GXPEngine\AddOns\TiledMapParser.cs" />
     <Compile Include="GXPEngine\AddOns\Window.cs" />
     <Compile Include="GXPEngine\EasyDraw.cs" />
+    <Compile Include="GXPEngine\Core\Collision.cs" />
     <Compile Include="GXPEngine\Core\SoundSystem.cs" />
     <Compile Include="GXPEngine\FMOD\FMODSoundSystem.cs" />
     <Compile Include="GXPEngine\SoLoud\Soloud.cs" />

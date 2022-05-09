@@ -13,11 +13,9 @@ public class Collision
 
     public Collider collider;
 
-    public Collision(float pT,Rigidbody pRigidbody,LineSegment pLine,Collider pCollider)
+namespace GXPEngine
+{
+    class Rope
     {
-        t = pT;
-        rigidbody = pRigidbody;
-        line = pLine;
-        collider = pCollider;
     }
 }
