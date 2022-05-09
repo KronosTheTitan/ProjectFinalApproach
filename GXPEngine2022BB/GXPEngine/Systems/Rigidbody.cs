@@ -17,7 +17,7 @@ public class Rigidbody : Collider
     public Vec2 position = new Vec2();
     public Vec2 oldPosition = new Vec2();
 
-    public Rigidbody(bool pTrigger):base(pTrigger)
+    public Rigidbody(bool pTrigger = false) : base(pTrigger)
     {
         CollisionManager.Instance.activeRigidbodies.Add(this);
 

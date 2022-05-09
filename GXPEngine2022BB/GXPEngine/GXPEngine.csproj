@@ -39,6 +39,7 @@
   <ItemGroup>
     <Compile Include="src\ECS\Components\KeyboardComponent.cs" />
     <Compile Include="src\ECS\EntityComponent.cs" />
+    <Compile Include="src\ECS\Entity\Player.cs" />
     <Compile Include="src\GraplingHook\Rope.cs" />
     <Compile Include="src\Utils\Vec2.cs" />
     <Compile Include="MyGame.cs" />
@@ -88,7 +89,5 @@
     <Compile Include="Systems\PolygonCollider.cs" />
     <Compile Include="Systems\Rigidbody.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="src\Entity\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>
