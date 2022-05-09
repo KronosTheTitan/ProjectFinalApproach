@@ -32,6 +32,7 @@ public class MyGame : Game
 		Component_Sprite sprite = new Component_Sprite(gameObject2, "circle.png");
 		Rigidbody rigidbody = new Rigidbody(gameObject2);
 		rigidbody.radius = sprite.sprite.width / 2;
+		rigidbody.weight = 100;
 		gameObject2.transform = new Vec2(width / 2, height / 4);
 
 		//Bullet_Component bullet = new Bullet_Component(gameObject2);
