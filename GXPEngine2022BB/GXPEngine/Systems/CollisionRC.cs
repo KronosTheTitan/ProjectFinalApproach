@@ -22,17 +22,10 @@ class CollisionRC : Collision
     {
 		if (!collider.trigger)
 		{
-			Vec2 desiredPos = rigidbody.gameObject.oldTransform + (rigidbody.gameObject.velocity * t);
-			rigidbody.gameObject.transform = desiredPos;
-			//if (Mathf.Approximate(t, 0))
-			//	rigidbody.gameObject.transform = rigidbody.gameObject.oldTransform + rigidbody.gameObject.velocity;
-			//else
-				rigidbody.gameObject.velocity = rigidbody.gameObject.velocity.Reflect((line.end - line.start).Normal(), rigidbody.bounciness);
-			rigidbody.gameObject.transform = rigidbody.gameObject.oldTransform + (rigidbody.gameObject.velocity * (1 - t));
-			//rigidbody.gravity = new Vec2(0, 0);
+			Vec2 desiredPos = rigidbody.oldPosition + (rigidbody.velocity * t);
+			rigidbody.position = desiredPos;
+				rigidbody.velocity = rigidbody.velocity.Reflect((line.end - line.start).Normal(), rigidbody.bounciness);
+			rigidbody.position = rigidbody.oldPosition + (rigidbody.velocity * (1 - t));
 		}
-
-		rigidbody.gameObject.OnCollision(collider.gameObject);
-		collider.gameObject.OnCollision(rigidbody.gameObject);
 	}
 }

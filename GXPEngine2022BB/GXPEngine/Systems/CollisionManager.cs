@@ -17,18 +17,6 @@ class CollisionManager
 
     public void OnStep()
     {
-		activeRigidbodies.Clear();
-		foreach(Chunk chunk in ChunkLoader.Instance.loadedChunks)
-        {
-			foreach (GameObjectECS gameObject in chunk.gameObjects)
-            {
-				Component[] components = gameObject.GetComponentsInChilderen(typeof(Rigidbody)).ToArray();
-				foreach(Component component in components)
-                {
-					activeRigidbodies.Add((Rigidbody)component);
-                }
-            }
-		}
 		foreach (Rigidbody rigidbody in activeRigidbodies)
         {
 			Collision collision = FindEarliestCollision(rigidbody);
@@ -48,17 +36,17 @@ class CollisionManager
 		foreach (PolygonCollider collider in activeColliders)
 			foreach (LineSegment line in collider.lines)
 			{
-				Vec2 ltb = rigidbody.gameObject.transform - line.start;
+				Vec2 ltb = rigidbody.position - line.start;
 				float ballDistance = ltb.Dot((line.end - line.start).Normal());
 
 				//compare distance with ball radius;
 				if (ballDistance < rigidbody.radius)
 				{
-					float a = (rigidbody.gameObject.oldTransform - line.start).Dot((line.end - line.start).Normal()) - rigidbody.radius;
-					float b = -rigidbody.gameObject.velocity.Dot((line.end - line.start).Normal());
+					float a = (rigidbody.position - line.start).Dot((line.end - line.start).Normal()) - rigidbody.radius;
+					float b = -rigidbody.velocity.Dot((line.end - line.start).Normal());
 					float t = a / b;
-					//rigidbody.gameObject.position = rigidbody.gameObject.oldPosition + (rigidbody.gameObject.velocity * t);
-					Vec2 desiredPos = rigidbody.gameObject.oldTransform + (rigidbody.gameObject.velocity * t);
+
+					Vec2 desiredPos = rigidbody.oldPosition + (rigidbody.velocity * t);
 					Vec2 lineVector = line.end - line.start;
 					float lineLength = lineVector.Length();
 					Vec2 bulletToLine = desiredPos - line.start;
@@ -96,9 +84,9 @@ class CollisionManager
         CollisionRR earliestCollision = null;
         float currentTimeOfImpact = 10;
 
-        Vec2 u = rigidbody.gameObject.oldTransform - (rigidbody1.transform);
-        float a = Mathf.Pow(rigidbody.gameObject.velocity.Length(), 2);
-        float b = u.Dot(rigidbody.gameObject.velocity) * 2;
+        Vec2 u = rigidbody.oldPosition - (rigidbody1.position);
+        float a = Mathf.Pow(rigidbody.velocity.Length(), 2);
+        float b = u.Dot(rigidbody.velocity) * 2;
         float c = Mathf.Pow(u.Length(), 2) - Mathf.Pow(rigidbody.radius + rigidbody1.radius, 2);
         float D = Mathf.Pow(b, 2) - (4 * a * c);
 
@@ -109,7 +97,7 @@ class CollisionManager
             else return null;
         }
 
-        if (rigidbody.gameObject.velocity.Length() != 0)
+        if (rigidbody.velocity.Length() != 0)
         {
             float TOI1 = (-b - Mathf.Sqrt(D)) / (2 * a);
             //float TOI2 = (-b + Mathf.Sqrt(D)) / (2 * a);

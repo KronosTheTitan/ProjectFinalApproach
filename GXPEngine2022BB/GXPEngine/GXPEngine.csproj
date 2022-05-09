@@ -82,12 +82,14 @@
     <Compile Include="GXPEngine\SoLoud\Soloud.cs" />
     <Compile Include="GXPEngine\SoLoud\SoloudSoundSystem.cs" />
     <Compile Include="ECS\GameObjectECS.cs" />
-    <Compile Include="Settings.cs" />
+    <Compile Include="Systems\Collider.cs" />
+    <Compile Include="Systems\Collision.cs" />
     <Compile Include="Systems\CollisionManager.cs" />
     <Compile Include="Systems\CollisionRC.cs" />
     <Compile Include="Systems\CollisionRR.cs" />
-    <Compile Include="Systems\UpdateManager.cs" />
-    <Compile Include="Vec2.cs" />
+    <Compile Include="Systems\LineSegment.cs" />
+    <Compile Include="Systems\PolygonCollider.cs" />
+    <Compile Include="Systems\Rigidbody.cs" />
   </ItemGroup>
   <ItemGroup />
 </Project>
