@@ -39,4 +39,8 @@ public class Component
     {
 
     }
+    public virtual void OnCollision(GameObjectECS gameObject)
+    {
+
+    }
 }

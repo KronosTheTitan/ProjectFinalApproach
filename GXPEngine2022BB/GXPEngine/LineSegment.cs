@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using GXPEngine;
-struct LineSegment
+public struct LineSegment
 {
     public Vec2 start;
     public Vec2 end;

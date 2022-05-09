@@ -73,7 +73,7 @@ namespace GXPEngine
 		/// <param name="addCollider">
 		/// If <c>true</c>, this sprite will have a collider that will be added to the collision manager.
 		/// </param> 
-		public Sprite (string filename, bool keepInCache=false, bool addCollider=true) : base(addCollider)
+		public Sprite (string filename, bool keepInCache=false) : base()
 		{
 			if (Game.main == null) {
 				throw new Exception ("Sprites cannot be created before creating a Game instance.");
@@ -109,14 +109,6 @@ namespace GXPEngine
 				return _uvs;
 			}
 		}
-
-		//------------------------------------------------------------------------------------------------------------------------
-		//														createCollider
-		//------------------------------------------------------------------------------------------------------------------------
-		protected override Collider createCollider() {
-			return new BoxCollider (this);
-		}
-
 		//------------------------------------------------------------------------------------------------------------------------
 		//														texture
 		//------------------------------------------------------------------------------------------------------------------------

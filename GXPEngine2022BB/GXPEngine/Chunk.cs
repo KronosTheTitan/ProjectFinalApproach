@@ -26,7 +26,8 @@ public class Chunk
 
     public List<GameObjectECS> gameObjects = new List<GameObjectECS>();
 
-    public List<ColliderECS> colliders = new List<ColliderECS>();
+    public List<Collider> colliders = new List<Collider>();
+    public List<Rigidbody> rigidbodies = new List<Rigidbody>();
     public void Update()
     {
         GameObjectECS[] gameObjectsTemp = gameObjects.ToArray();
