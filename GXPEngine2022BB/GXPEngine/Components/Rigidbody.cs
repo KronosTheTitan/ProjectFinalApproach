@@ -6,9 +6,9 @@ using GXPEngine;
 public class Rigidbody : Component
 {
     public float radius=5;
-    public float weight;
+    public float weight = 1;
     public float bounciness = 0f;
-    public float inertia = 0.75f;
+    public float inertia = .8f;
 
     public Vec2 gravity = new Vec2(0, 1);
 

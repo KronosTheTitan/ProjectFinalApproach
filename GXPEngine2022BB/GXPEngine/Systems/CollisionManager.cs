@@ -73,7 +73,9 @@ class CollisionManager
 		foreach (Rigidbody rigidbody1 in activeRigidbodies)
 		{
 			if (rigidbody == rigidbody1) continue;
-			RtRCheck(rigidbody, rigidbody1);
+            Collision collision1 = RtRCheck(rigidbody, rigidbody1);
+            if (collision1 != null)
+                collisions.Add(RtRCheck(rigidbody, rigidbody1));
 
 		}
 
@@ -89,33 +91,40 @@ class CollisionManager
     }
 	Collision RtRCheck(Rigidbody rigidbody,Rigidbody rigidbody1)
     {
-		if ((rigidbody.transform - rigidbody1.transform).Length() < rigidbody.radius + rigidbody1.radius)
-		{
-			float a = rigidbody.gameObject.velocity.Length() * rigidbody.gameObject.velocity.Length();
+        Vec2 normal = new Vec2();
+        //CollisionInfo earliestCollision = new CollisionInfo(normal,null,0);
+        CollisionRR earliestCollision = null;
+        float currentTimeOfImpact = 10;
 
-			Vec2 u = rigidbody.transform - rigidbody1.transform;
+        Vec2 u = rigidbody.gameObject.oldTransform - (rigidbody1.transform);
+        float a = Mathf.Pow(rigidbody.gameObject.velocity.Length(), 2);
+        float b = u.Dot(rigidbody.gameObject.velocity) * 2;
+        float c = Mathf.Pow(u.Length(), 2) - Mathf.Pow(rigidbody.radius + rigidbody1.radius, 2);
+        float D = Mathf.Pow(b, 2) - (4 * a * c);
 
-			//float b = 2 * (u.Dot(rigidbody.gameObject.velocity));
-			float b = 2 * (rigidbody.gameObject.velocity.Dot(u));
+        if (c < 0)
+        {
+            if (b < 0)
+                return new CollisionRR(normal, rigidbody, rigidbody1, 0);
+            else return null;
+        }
 
-			float c = (u.Length() * u.Length()) - ((rigidbody.radius + rigidbody1.radius) * (rigidbody.radius + rigidbody1.radius));
-
-			Console.WriteLine("a = " + a.ToString() + " : b = " + b.ToString() + " : c = " + c.ToString());
-
-			if (Mathf.Approximate(a,0)) return null;
-
-			float d = (b * b) - (4 * a * c);
-
-			float t = (-b - Mathf.Sqrt(d)) / (2 * a);
-
-			//if (t < 0) return null;
-
-			rigidbody.gameObject.transform = rigidbody.gameObject.oldTransform + (rigidbody.gameObject.velocity * t);
-
-			//Console.WriteLine("hit : " + t + " : " + rigidbody1.transform.ToString());
-
-			return new CollisionRR(rigidbody, rigidbody1, t);
-		}
-		return null;
+        if (rigidbody.gameObject.velocity.Length() != 0)
+        {
+            float TOI1 = (-b - Mathf.Sqrt(D)) / (2 * a);
+            //float TOI2 = (-b + Mathf.Sqrt(D)) / (2 * a);
+            
+            if (TOI1 < 1 && TOI1 >= 0)
+            {
+                    //Vec2 normal = (mover.position - position).Normalized();
+                    if (currentTimeOfImpact > TOI1)
+                    {
+                        earliestCollision = new CollisionRR(normal, rigidbody, rigidbody1, TOI1);
+                        currentTimeOfImpact = TOI1;
+                    }
+            }
+            
+        }
+        return null;
 	}
 }

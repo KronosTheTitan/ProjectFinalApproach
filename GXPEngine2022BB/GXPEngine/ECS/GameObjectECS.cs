@@ -58,7 +58,7 @@ public class GameObjectECS
     public void Destroy()
     {
         components.Clear();
-        foreach (GameObject gameObject in childeren)
+        foreach (GameObjectECS gameObject in childeren)
             gameObject.Destroy();
     }
     public void Update()
