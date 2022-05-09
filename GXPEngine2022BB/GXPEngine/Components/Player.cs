@@ -35,14 +35,14 @@ class Player : Component
         {
             gameObject.velocity += new Vec2(-speed, 0);
         }
-        if (Input.GetKey(Key.W)|Input.GetKeyDown(Key.SPACE))
+        if (Input.GetKey(Key.W)||Input.GetKeyDown(Key.SPACE))
         {
             gameObject.velocity += new Vec2(0, -jumpForce);
             //rigidbody.gravity = new Vec2(0, 1);
         }
-        if (Input.GetKey(Key.S) | Input.GetKeyDown(Key.SPACE))
+        if (Input.GetKey(Key.S) || Input.GetKeyDown(Key.SPACE))
         {
-            //gameObject.velocity += new Vec2(0, speed);
+            gameObject.velocity += new Vec2(0, speed);
         }
         
         //gameObject.velocity = new Vec2(3, 3);
