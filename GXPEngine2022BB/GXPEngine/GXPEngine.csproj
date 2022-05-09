@@ -39,7 +39,6 @@
   <ItemGroup>
     <Compile Include="src\ECS\Components\KeyboardComponent.cs" />
     <Compile Include="src\ECS\EntityComponent.cs" />
-    <Compile Include="src\Entity\Player.cs" />
     <Compile Include="src\GraplingHook\Rope.cs" />
     <Compile Include="src\Utils\Vec2.cs" />
     <Compile Include="MyGame.cs" />
@@ -59,7 +58,6 @@
     <Compile Include="GXPEngine\Core\Transformable.cs" />
     <Compile Include="GXPEngine\Core\Vector2.cs" />
     <Compile Include="GXPEngine\FMOD\FMOD.cs" />
-    <Compile Include="GXPEngine\Managers\CollisionManager.cs" />
     <Compile Include="GXPEngine\Managers\UpdateManager.cs" />
     <Compile Include="GXPEngine\OpenGL\GL.cs" />
     <Compile Include="GXPEngine\Pivot.cs" />
@@ -81,7 +79,6 @@
     <Compile Include="GXPEngine\FMOD\FMODSoundSystem.cs" />
     <Compile Include="GXPEngine\SoLoud\Soloud.cs" />
     <Compile Include="GXPEngine\SoLoud\SoloudSoundSystem.cs" />
-    <Compile Include="ECS\GameObjectECS.cs" />
     <Compile Include="Systems\Collider.cs" />
     <Compile Include="Systems\Collision.cs" />
     <Compile Include="Systems\CollisionManager.cs" />
@@ -91,5 +88,7 @@
     <Compile Include="Systems\PolygonCollider.cs" />
     <Compile Include="Systems\Rigidbody.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="src\Entity\" />
+  </ItemGroup>
 </Project>

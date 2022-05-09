@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace GXPEngine.ECS
@@ -76,7 +78,11 @@ namespace GXPEngine.ECS
             {
                 T GetObject(params object[] args)
                 {
-                    return (T)Activator.CreateInstance(typeof(T), args);
+                    return (T)Activator.CreateInstance(typeof(T),
+                       BindingFlags.CreateInstance |
+                       BindingFlags.Public |
+                       BindingFlags.Instance |
+                       BindingFlags.OptionalParamBinding, null, args, CultureInfo.CurrentCulture);
                 }
                 dynamic c = GetObject(mParams);
                 c.entity = this;

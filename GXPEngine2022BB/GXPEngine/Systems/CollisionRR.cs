@@ -19,13 +19,11 @@ class CollisionRR : Collision
 	{
 		float totalMass = rigidbody.weight + other.weight;
 
-		Vec2 u = ((rigidbody.weight*rigidbody.gameObject.velocity+other.weight*other.gameObject.velocity)/totalMass);
+		Vec2 u = ((rigidbody.weight*rigidbody.velocity+other.weight*other.velocity)/totalMass);
 
-		rigidbody.gameObject.transform = rigidbody.gameObject.oldTransform + (rigidbody.gameObject.velocity * t);
+		rigidbody.position = rigidbody.oldPosition + (rigidbody.velocity * t);
 
-		rigidbody.gameObject.velocity = rigidbody.gameObject.velocity - (1 - rigidbody.bounciness) * (rigidbody.gameObject.velocity - u);
-		other.gameObject.velocity = other.gameObject.velocity - (1 - other.bounciness) * (other.gameObject.velocity - u);
-
-		Console.WriteLine(rigidbody.gameObject.velocity.ToString());
+		rigidbody.velocity = rigidbody.velocity - (1 - rigidbody.bounciness) * (rigidbody.velocity - u);
+		other.velocity = other.velocity - (1 - other.bounciness) * (other.velocity - u);
 	}
 }

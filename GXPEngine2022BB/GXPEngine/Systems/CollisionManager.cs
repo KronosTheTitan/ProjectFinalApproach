@@ -38,11 +38,10 @@ class CollisionManager
 			{
 				Vec2 ltb = rigidbody.position - line.start;
 				float ballDistance = ltb.Dot((line.end - line.start).Normal());
-
-				//compare distance with ball radius;
+                				
 				if (ballDistance < rigidbody.radius)
 				{
-					float a = (rigidbody.position - line.start).Dot((line.end - line.start).Normal()) - rigidbody.radius;
+					float a = (rigidbody.oldPosition - line.start).Dot((line.end - line.start).Normal()) - rigidbody.radius;
 					float b = -rigidbody.velocity.Dot((line.end - line.start).Normal());
 					float t = a / b;
 
@@ -52,10 +51,10 @@ class CollisionManager
 					Vec2 bulletToLine = desiredPos - line.start;
 					float dotProduct = bulletToLine.Dot(lineVector.Normalized());
 
-					if (dotProduct > 0-rigidbody.radius && dotProduct < lineLength+rigidbody.radius && (a>0&&b>0))
+                    if (dotProduct > 0-rigidbody.radius && dotProduct < lineLength+rigidbody.radius && (a>0&&b>0))
 					{
 						collisions.Add(new CollisionRC(rigidbody,collider,line,t));
-					}
+                    }
 				}
 			}
 		foreach (Rigidbody rigidbody1 in activeRigidbodies)
@@ -80,7 +79,6 @@ class CollisionManager
 	Collision RtRCheck(Rigidbody rigidbody,Rigidbody rigidbody1)
     {
         Vec2 normal = new Vec2();
-        //CollisionInfo earliestCollision = new CollisionInfo(normal,null,0);
         CollisionRR earliestCollision = null;
         float currentTimeOfImpact = 10;
 
@@ -100,16 +98,14 @@ class CollisionManager
         if (rigidbody.velocity.Length() != 0)
         {
             float TOI1 = (-b - Mathf.Sqrt(D)) / (2 * a);
-            //float TOI2 = (-b + Mathf.Sqrt(D)) / (2 * a);
             
             if (TOI1 < 1 && TOI1 >= 0)
             {
-                    //Vec2 normal = (mover.position - position).Normalized();
-                    if (currentTimeOfImpact > TOI1)
-                    {
-                        earliestCollision = new CollisionRR(normal, rigidbody, rigidbody1, TOI1);
-                        currentTimeOfImpact = TOI1;
-                    }
+                if (currentTimeOfImpact > TOI1)
+                {
+                    earliestCollision = new CollisionRR(normal, rigidbody, rigidbody1, TOI1);
+                    currentTimeOfImpact = TOI1;
+                }
             }
             
         }

@@ -76,43 +76,7 @@ namespace GXPEngine
 		/// </summary>
 		void HandleOnStep ()
 		{
-			//mouse can enter/leave target without moving (the target may move!)
-			bool isOnTarget = _target.HitTestPoint (Input.mouseX, Input.mouseY);
-			if (isOnTarget  && !_wasOnTarget) {
-				if (OnMouseOverTarget != null) OnMouseOverTarget (_target, MouseEventType.MouseOverTarget);
-			} else if (!isOnTarget  && _wasOnTarget) {
-				if (OnMouseOffTarget != null) OnMouseOffTarget (_target, MouseEventType.MouseOffTarget);
-			}
-
-			//did we just press the mouse down?
-			if (!_wasMouseDown && Input.GetMouseButton (0)) {
-				if (OnMouseDown != null) OnMouseDown(_target, MouseEventType.MouseDown);
-				if (isOnTarget  && OnMouseDownOnTarget != null) OnMouseDownOnTarget(_target, MouseEventType.MouseDownOnTarget);
-				_wasMouseDown = true;
-				_wasMouseDownOnTarget = isOnTarget;
-
-				_offset = _target.TransformPoint (0, 0);
-				_offset.x = _offset.x - Input.mouseX;
-				_offset.y = _offset.y - Input.mouseY;
-
-			} else if (_wasMouseDown && !Input.GetMouseButton (0)) {
-				if (OnMouseUp != null) OnMouseUp(_target, MouseEventType.MouseUp);
-				if (isOnTarget && OnMouseUpOnTarget != null) OnMouseUpOnTarget(_target, MouseEventType.MouseUpOnTarget);
-				if (isOnTarget && _wasMouseDownOnTarget && OnMouseClick != null) OnMouseClick (_target, MouseEventType.MouseClick);
-
-				_wasMouseDown = false;
-				_wasMouseDownOnTarget = false;
-				_offset.x = _offset.y = 0;
-			}
-
-			if (_lastX != Input.mouseX || _lastY != Input.mouseY) {
-				_lastX = Input.mouseX;
-				_lastY = Input.mouseY;
-				if (OnMouseMove != null) OnMouseMove (_target, MouseEventType.MouseMove);
-				if (isOnTarget && OnMouseMoveOnTarget != null) OnMouseMoveOnTarget(_target, MouseEventType.MouseMoveOnTarget);
-			}
-
-			_wasOnTarget = isOnTarget;
+			
 		}
 
 		//contains offset from mouse to target on click
