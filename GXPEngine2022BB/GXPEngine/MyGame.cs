@@ -100,15 +100,16 @@ public class MyGame : Game
             foreach (Line l in collidedLines)
             {
                 float correction = 10000;
+                //Console.WriteLine(e._oldPosition.x - e._position.x);
                 if (l.isHorizontal)
                 {
                     if (e._velocity.y > 0)
                     {
-                        correction = (e._oldPosition.y - l.y1) / (e._oldPosition.y - e._position.y);
+                        correction = Mathf.Min(correction, ((e.y + e.height) - l.midPoint.y) / e._velocity.y);
                     }
                     else
                     {
-                        correction = (l.y1 - e._oldPosition.y) / (e._position.y - e._oldPosition.y);
+                        correction = Mathf.Min(correction, (e.y - l.midPoint.y) / e._velocity.y);
                         //correction = Mathf.Abs(e.y - l.y1);
                     }
 
@@ -117,16 +118,17 @@ public class MyGame : Game
                 {
                     if (e._velocity.x > 0)
                     {
-                        correction = (l.x1 - e._oldPosition.x) / (e._position.x - e._oldPosition.x);
+                        correction = Mathf.Min(correction, ((e.x + e.width) - l.midPoint.x) / e._velocity.x);
                     }
                     else
                     {
-                        correction = (e._oldPosition.x - l.x1) / (e._oldPosition.x - e._position.x);
+                        correction = Mathf.Min(correction, (e.x - l.midPoint.x) / e._velocity.x);
                     }
+
                 }
                     if (correction < minCorrection)
                     {
-                        Console.WriteLine("CorrectionNew: " + correction + " CorrectionOld: " + minCorrection);
+                        //Console.WriteLine("CorrectionNew: " + correction + " CorrectionOld: " + minCorrection);
                         minCorrection = correction;
                         chosenLine = l;
                     }
@@ -188,7 +190,8 @@ public class MyGame : Game
                 {
                     e.x = chosenLine.x1;
                 }
-                e._velocity.x = 0 - e._velocity.x / 2;
+                e._velocity.x = 0;
+                //e._velocity.x = 0 - e._velocity.x / 2;
             }
             else
             {
@@ -286,7 +289,7 @@ public class MyGame : Game
         if (!canvas3.HitTestPoint(Input.mouseX, Input.mouseY)) return;
         //Console.WriteLine(NextRopeAccelerationInput());
         float ropeAcceleration = -.005f * (Mathf.Cos(ropeAngle) + NextRopeAccelerationInput());
-        Console.WriteLine(ropeAcceleration);
+        //Console.WriteLine(ropeAcceleration);
         ropeAngleVelocity += ropeAcceleration;
         //Console.WriteLine(ropeAngle);
         ropeAngle += ropeAngleVelocity;

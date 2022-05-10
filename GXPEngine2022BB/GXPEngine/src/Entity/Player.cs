@@ -59,20 +59,23 @@ namespace GXPEngine
 
         public override void update()
         {
-            _oldPosition = _position;
+            _oldPosition.x = x;
+            _oldPosition.y = y;
             _oldVelocity = _velocity;
 
             Controlls();
 
             Move();
-
             //UpdatePosition();
         }
 
         void Move()
         {
-            _velocity += _acceleration;
-            _velocity *= .9f;
+            if (!ignore)
+            {
+                _velocity += _acceleration;
+                _velocity *= .9f;
+            }
             //_position += _velocity;
 
 
