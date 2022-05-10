@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using static GXPEngine.ECS.EntityComponent;
 
-namespace GXPEngine.ECS
+namespace GXPEngine
 {
     public class Player : Entity
     {
@@ -16,6 +16,8 @@ namespace GXPEngine.ECS
 
         private Vec2 _acceleration, _input;
         bool grounded = true;
+
+        public bool ignore = false;
 
         public Player() : base("checkers.png")
         {
@@ -49,6 +51,7 @@ namespace GXPEngine.ECS
 
         private void Controlls()
         {
+            if (ignore) return;
             KeyUpdate();
             if (!((moveLeft ^ moveRight) || (moveUp ^ moveDown))) _acceleration.x = 0;
             if (moveRight ^ moveLeft) _acceleration.x = (moveLeft ? -1 : 1);

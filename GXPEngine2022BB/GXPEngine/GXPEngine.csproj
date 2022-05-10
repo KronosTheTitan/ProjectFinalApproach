@@ -37,6 +37,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GXPEngine\AddOns\Gizmos.cs" />
+    <Compile Include="src\Collision\Line.cs" />
     <Compile Include="src\ECS\Components\KeyboardComponent.cs" />
     <Compile Include="src\ECS\EntityComponent.cs" />
     <Compile Include="src\Entity\Player.cs" />
