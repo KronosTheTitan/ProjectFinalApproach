@@ -403,6 +403,18 @@ namespace GXPEngine
 				return parent.TransformPoint (ret.x, ret.y);
 			}
 		}
+		public override Vec2 TransformPointVec2(float x, float y)
+		{
+			Vec2 ret = base.TransformPointVec2(x, y);
+			if (parent == null)
+			{
+				return ret;
+			}
+			else
+			{
+				return parent.TransformPointVec2(ret.x, ret.y);
+			}
+		}
 
 		/// <summary>
 		/// Transforms a direction vector from local to global space.

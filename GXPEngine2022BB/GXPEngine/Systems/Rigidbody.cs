@@ -8,9 +8,9 @@ public class Rigidbody : Collider
     public float radius = 5;
     public float weight = 1;
     public float bounciness = 0f;
-    public float inertia = .8f;
+    public float inertia = .5f;
 
-    public Vec2 gravity = new Vec2(0, 1);
+    public Vec2 gravity = new Vec2(0, 0);
 
     public Vec2 velocity = new Vec2();
 

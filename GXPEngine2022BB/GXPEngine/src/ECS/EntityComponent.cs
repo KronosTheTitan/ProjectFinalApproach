@@ -56,7 +56,7 @@ namespace GXPEngine.ECS
                 return typeID;
             }
 
-            public Entity(string filename, int cols = 1, int rows = 1) : base(filename, cols, rows)
+            public Entity(string filename, int cols = 1, int rows = 1) : base(filename, cols, rows,-1,false,false)
             {
                 components = new List<Component>();
             }

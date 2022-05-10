@@ -5,7 +5,6 @@ using System.Text;
 using GXPEngine;
 public class Collider : GXPEngine.ECS.EntityComponent.Component
 {
-    public LineSegment[] lines;
     public bool trigger;
     public override void init()
     {

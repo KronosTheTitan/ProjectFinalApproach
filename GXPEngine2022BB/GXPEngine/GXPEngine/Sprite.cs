@@ -243,6 +243,15 @@ namespace GXPEngine
             ret[3] = TransformPoint(_bounds.left, _bounds.bottom);
             return ret;
         }
+        public Vec2[] GetExtentsVec2()
+        {
+            Vec2[] ret = new Vec2[4];
+            ret[0] = TransformPointVec2(_bounds.left, _bounds.top);
+            ret[1] = TransformPointVec2(_bounds.right, _bounds.top);
+            ret[2] = TransformPointVec2(_bounds.right, _bounds.bottom);
+            ret[3] = TransformPointVec2(_bounds.left, _bounds.bottom);
+            return ret;
+        }
 
         //------------------------------------------------------------------------------------------------------------------------
         //														SetOrigin()

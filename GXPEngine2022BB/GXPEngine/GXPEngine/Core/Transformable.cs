@@ -162,6 +162,15 @@ namespace GXPEngine
 			ret.y = (_matrix[1] * x * _scaleX + _matrix[5] * y * _scaleY + _matrix[13]);
 			return ret;
 		}
+		public virtual Vec2 TransformPointVec2(float x, float y)
+		{
+			Vec2 ret = new Vec2();
+			ret.x = (_matrix[0] * x * _scaleX + _matrix[4] * y * _scaleY + _matrix[12]);
+			ret.y = (_matrix[1] * x * _scaleX + _matrix[5] * y * _scaleY + _matrix[13]);
+			return ret;
+		}
+
+
 
 		/// <summary>
 		/// Transforms a direction vector (x,y) from this object's local space to the game's global space. 
