@@ -13,6 +13,7 @@ public class MyGame : Game
     EasyDraw lines, canvas3;
 
     Player e;
+    Box e1;
 
     List<Line> collisionLines = new List<Line>();
 
@@ -31,6 +32,11 @@ public class MyGame : Game
         //e.addComponent<KeyboardComponent>();
 
         manager.addEntity(e);
+
+        e1 = new Box(e);
+        //e.addComponent<KeyboardComponent>();
+
+        manager.addEntity(e1);
 
         EasyDraw canvas2 = new EasyDraw(800, 100)
         {
@@ -68,72 +74,42 @@ public class MyGame : Game
 
     public bool IsCollidingWithLine(Line l)
     {
-        if (l.isHorizontal)
-        {
-            var isRectWithinLineX = (l.x1 < e.x && e.x < l.x2) || (l.x1 < e.x + e.width && e.x + e.width < l.x2) || (e.x < l.x1 && l.x1 < e.x + e.width) || (e.x < l.x2 && l.x2 < e.x + e.width);
-            var isRectWithinLineY = e.y < l.y1 && l.y1 < e.y + e.height;
-            return isRectWithinLineX && isRectWithinLineY;
-        }
-        else
-        {
-            bool isRectWithinLineY = (l.y1 < e.y && e.y < l.y2) || (l.y1 < e.y + e.height && e.y + e.height < l.y2) || (e.y < l.y1 && l.y1 < e.y + e.height) || (e.y < l.y2 && l.y2 < e.y + e.height);
-            bool isRectWithinLineX = e.x < l.x1 && l.x1 < e.x + e.width;
-            return isRectWithinLineX && isRectWithinLineY;
-        }
-    }
-
-    private bool isBetween(float a, float b1, float b2)
-    {
-        return (b1 <= a && a <= b2) || (b2 <= a && a <= b1);
+        return l.isHorizontal ? 
+            ((l.x1 < e.x && e.x < l.x2) || 
+            (l.x1 < e.x + e.width && e.x + e.width < l.x2) || 
+            (e.x < l.x1 && l.x1 < e.x + e.width) || 
+            (e.x < l.x2 && l.x2 < e.x + e.width)) && 
+            e.y < l.y1 && l.y1 < e.y + e.height : 
+            ((l.y1 < e.y && e.y < l.y2) || 
+            (l.y1 < e.y + e.height && e.y + e.height < l.y2) || 
+            (e.y < l.y1 && l.y1 < e.y + e.height) || 
+            (e.y < l.y2 && l.y2 < e.y + e.height)) && 
+            e.x < l.x1 && l.x1 < e.x + e.width;
     }
 
     public Line GetPriorityCollision(List<Line> collidedLines)
     {
         if (collidedLines.Count == 0) return null;
+        if (collidedLines.Count == 1) return collidedLines[0];
 
         float minCorrection = 10000;
 
         Line chosenLine = collidedLines[0];
 
-        if (collidedLines.Count > 1)
+        foreach (Line l in collidedLines)
         {
-            foreach (Line l in collidedLines)
+            float correction = Mathf.Min(1000, l.isHorizontal ? 
+                e._velocity.y > 0 ? 
+                (e.y + e.height - l.midPoint.y) / e._velocity.y : 
+                (e.y - l.midPoint.y) / e._velocity.y : 
+                e._velocity.x > 0 ? (e.x + e.width - l.midPoint.x) / e._velocity.x : 
+                (e.x - l.midPoint.x) / e._velocity.x);
+            if (correction < minCorrection)
             {
-                float correction = 10000;
-                //Console.WriteLine(e._oldPosition.x - e._position.x);
-                if (l.isHorizontal)
-                {
-                    if (e._velocity.y > 0)
-                    {
-                        correction = Mathf.Min(correction, ((e.y + e.height) - l.midPoint.y) / e._velocity.y);
-                    }
-                    else
-                    {
-                        correction = Mathf.Min(correction, (e.y - l.midPoint.y) / e._velocity.y);
-                        //correction = Mathf.Abs(e.y - l.y1);
-                    }
-
-                }
-                else
-                {
-                    if (e._velocity.x > 0)
-                    {
-                        correction = Mathf.Min(correction, ((e.x + e.width) - l.midPoint.x) / e._velocity.x);
-                    }
-                    else
-                    {
-                        correction = Mathf.Min(correction, (e.x - l.midPoint.x) / e._velocity.x);
-                    }
-
-                }
-                    if (correction < minCorrection)
-                    {
-                        //Console.WriteLine("CorrectionNew: " + correction + " CorrectionOld: " + minCorrection);
-                        minCorrection = correction;
-                        chosenLine = l;
-                    }
-                
+                minCorrection = correction;
+                chosenLine = l;
             }
+
         }
         return chosenLine;
     }

@@ -41,6 +41,7 @@
     <Compile Include="src\Collision\Line.cs" />
     <Compile Include="src\ECS\Components\KeyboardComponent.cs" />
     <Compile Include="src\ECS\EntityComponent.cs" />
+    <Compile Include="src\Entity\Box.cs" />
     <Compile Include="src\Entity\Player.cs" />
     <Compile Include="src\GraplingHook\Rope.cs" />
     <Compile Include="src\Utils\FloatExtensions.cs" />
