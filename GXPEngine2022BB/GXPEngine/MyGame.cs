@@ -4,10 +4,11 @@ using GXPEngine;                                // GXPEngine contains the engine
 using System.Drawing;                           // System.Drawing contains drawing tools such as Color definitions
 using GXPEngine.ECS;
 using static GXPEngine.ECS.EntityComponent;
+using GXPEngine.Level;
 
 public class MyGame : Game
 {
-
+    /*
     Manager manager;
 
     EasyDraw lines, canvas3;
@@ -16,9 +17,15 @@ public class MyGame : Game
     Box e1;
 
     List<Line> collisionLines = new List<Line>();
+    */
 
-    public MyGame() : base(800, 600, false)     // Create a window that's 800x600 and NOT fullscreen
+    Level level;
+
+    public MyGame() : base(800, 600, false, false)     // Create a window that's 800x600 and NOT fullscreen
     {
+        targetFps = 60;
+        level = new Level();
+        /*
         manager = new Manager(this);
 
         EasyDraw canvas = new EasyDraw(800, 600, false);
@@ -70,20 +77,22 @@ public class MyGame : Game
         }
 
         OnAfterStep += LateUpdate;
+        */
     }
 
+    /*
     public bool IsCollidingWithLine(Line l)
     {
-        return l.isHorizontal ? 
-            ((l.x1 < e.x && e.x < l.x2) || 
-            (l.x1 < e.x + e.width && e.x + e.width < l.x2) || 
-            (e.x < l.x1 && l.x1 < e.x + e.width) || 
-            (e.x < l.x2 && l.x2 < e.x + e.width)) && 
-            e.y < l.y1 && l.y1 < e.y + e.height : 
-            ((l.y1 < e.y && e.y < l.y2) || 
-            (l.y1 < e.y + e.height && e.y + e.height < l.y2) || 
-            (e.y < l.y1 && l.y1 < e.y + e.height) || 
-            (e.y < l.y2 && l.y2 < e.y + e.height)) && 
+        return l.isHorizontal ?
+            ((l.x1 < e.x && e.x < l.x2) ||
+            (l.x1 < e.x + e.width && e.x + e.width < l.x2) ||
+            (e.x < l.x1 && l.x1 < e.x + e.width) ||
+            (e.x < l.x2 && l.x2 < e.x + e.width)) &&
+            e.y < l.y1 && l.y1 < e.y + e.height :
+            ((l.y1 < e.y && e.y < l.y2) ||
+            (l.y1 < e.y + e.height && e.y + e.height < l.y2) ||
+            (e.y < l.y1 && l.y1 < e.y + e.height) ||
+            (e.y < l.y2 && l.y2 < e.y + e.height)) &&
             e.x < l.x1 && l.x1 < e.x + e.width;
     }
 
@@ -98,11 +107,11 @@ public class MyGame : Game
 
         foreach (Line l in collidedLines)
         {
-            float correction = Mathf.Min(1000, l.isHorizontal ? 
-                e._velocity.y > 0 ? 
-                (e.y + e.height - l.midPoint.y) / e._velocity.y : 
-                (e.y - l.midPoint.y) / e._velocity.y : 
-                e._velocity.x > 0 ? (e.x + e.width - l.midPoint.x) / e._velocity.x : 
+            float correction = Mathf.Min(1000, l.isHorizontal ?
+                e._velocity.y > 0 ?
+                (e.y + e.height - l.midPoint.y) / e._velocity.y :
+                (e.y - l.midPoint.y) / e._velocity.y :
+                e._velocity.x > 0 ? (e.x + e.width - l.midPoint.x) / e._velocity.x :
                 (e.x - l.midPoint.x) / e._velocity.x);
             if (correction < minCorrection)
             {
@@ -143,7 +152,8 @@ public class MyGame : Game
                     e.y = chosenLine.y1;
                 }
                 e._velocity.y = 0;
-            } else
+            }
+            else
             {
                 if (e._velocity.y >= 0)
                 {
@@ -154,7 +164,8 @@ public class MyGame : Game
                     e.y = chosenLine.y1;
                 }
             }
-        } else
+        }
+        else
         {
             if (isGrapple)
             {
@@ -202,9 +213,11 @@ public class MyGame : Game
 
     void Update()
     {
-        if (isGrapple)  {
+        if (isGrapple)
+        {
             e.ignore = true;
-        } else
+        }
+        else
         {
             e.ignore = false;
 
@@ -310,6 +323,7 @@ public class MyGame : Game
             ropeLengthOld = grappleOrign.Length();
         }
     }
+    */
 
     static void Main()                          // Main() is the first method that's called when the program is run
     {

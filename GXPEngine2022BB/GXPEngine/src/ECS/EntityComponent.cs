@@ -34,6 +34,12 @@ namespace GXPEngine.ECS
             private Component[] componentArray = new Component[32];
             private bool[] componentBitSet = new bool[32];
 
+            public Vec2 _velocity, _position;
+
+            public Vec2 _oldVelocity, _oldPosition;
+
+            public Vec2 _acceleration;
+
             private ComponentID getNewComponentTypeID()
             {
                 return lastID++;
