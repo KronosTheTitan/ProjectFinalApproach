@@ -71,6 +71,7 @@
     <Compile Include="GXPEngine\Utils\Time.cs" />
     <Compile Include="GXPEngine\Utils\Utils.cs" />
     <Compile Include="GXPEngine\AddOns\Camera.cs" />
+    <Compile Include="GXPEngine\AddOns\Gizmos.cs" />
     <Compile Include="GXPEngine\Managers\HierarchyManager.cs" />
     <Compile Include="GXPEngine\AddOns\Settings.cs" />
     <Compile Include="GXPEngine\AddOns\TiledMapParser.cs" />

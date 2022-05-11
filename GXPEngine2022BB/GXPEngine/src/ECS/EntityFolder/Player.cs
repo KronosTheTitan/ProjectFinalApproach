@@ -15,11 +15,11 @@ namespace GXPEngine
         {
             _camera = camera;
             rigidbody = addComponent<Rigidbody>();
-            width = 32;
-            height = 32;
-            rigidbody.radius = width / 2;
-            rigidbody.weight = 100;
             SetOrigin(width / 2, height / 2);
+            width = 64;
+            height = 64;
+            rigidbody.radius = 32;
+            rigidbody.weight = 100;
         }
 
         private void KeyUpdate()
@@ -32,7 +32,7 @@ namespace GXPEngine
         public override void update()
         {
             KeyUpdate();
-            _camera.SetXY(x, y);/*
+            _camera.SetXY(x, 300);/*
             if (!((moveLeft ^ moveRight) || (moveUp ^ moveDown))) return;
             if (moveUp ^ moveDown) rigidbody.velocity.y = (moveUp ? -3 : 3);
             if (moveRight ^ moveLeft) rigidbody.velocity.x = (moveLeft ? -3 : 3);*/

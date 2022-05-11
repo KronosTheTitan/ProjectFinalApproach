@@ -10,45 +10,12 @@ public class MyGame : Game
     public Manager manager;
 
     public Camera camera;
-    public MyGame() : base(800, 600, false)     // Create a window that's 800x600 and NOT fullscreen
+    public MyGame() : base(800, 600, false, pPixelArt: true)     // Create a window that's 800x600 and NOT fullscreen
     {
         manager = new Manager(this);
-        // Draw some things on a canvas:
-        EasyDraw canvas = new EasyDraw(800, 600);
-        canvas.Clear(Color.MediumPurple);
-        canvas.Fill(Color.Yellow);
-        canvas.Ellipse(width / 2, height / 2, 200, 200);
-        canvas.Fill(50);
-        canvas.TextSize(32);
-        canvas.TextAlign(CenterMode.Center, CenterMode.Center);
-        canvas.Text("Welcome!", width / 2, height / 2);
-
-        // Add the canvas to the engine to display it:
-        AddChild(canvas);
         Console.WriteLine("MyGame initialized");
         camera = new Camera(0, 0, 800, 600);
         AddChild(camera);
-        Player player = new Player(camera,"circle.png");
-        manager.addEntity(player);
-
-        Entity gameObject = new Entity("circle.png");
-        Rigidbody rigidbody = gameObject.addComponent<Rigidbody>(true);
-        gameObject.x = 400;
-        gameObject.y = 0;
-        gameObject.SetOrigin(gameObject.width / 2, gameObject.height / 2);
-        rigidbody.radius = gameObject.width / 2;
-        rigidbody.weight = 100;
-        rigidbody.position = new Vec2(600, 0);
-
-        manager.addEntity(gameObject);
-
-        Entity gameObject2 = new Entity("circle.png");
-        gameObject2.SetOrigin(gameObject2.width / 2, gameObject2.height / 2);
-        Rigidbody rigidbody1 = gameObject2.addComponent<Rigidbody>(true);
-        rigidbody1.radius = gameObject2.width / 2;
-        rigidbody1.weight = 100;
-        rigidbody1.position = new Vec2(width / 2, height / 4);
-        manager.addEntity(gameObject2);
 
         //Bullet_Component bullet = new Bullet_Component(gameObject2);
 
@@ -59,7 +26,7 @@ public class MyGame : Game
         gameObject3.width = width;
         gameObject3.height = 10;
 
-        Vec2[] points =
+        /*Vec2[] points =
         {
             new Vec2(0,1),
             new Vec2(9,1),
@@ -105,7 +72,7 @@ public class MyGame : Game
         Console.WriteLine(points.Length);
         for(int i = 0; i<points.Length;i++)
         {
-            points[i] = points[i] * 32;
+            points[i] = points[i] * 64;
         }
         int[] lines =
         {
@@ -156,11 +123,10 @@ public class MyGame : Game
             38,39,
             39,0
         };
-        gameObject3.addComponent<PolygonCollider>(points, lines, false);
+        gameObject3.addComponent<PolygonCollider>(points, lines, false);*/
         manager.addEntity(gameObject3);
 
         LevelLoader.LoadLevel(this);
-        
     }
 
     // For every game object, Update is called every frame, by the engine:

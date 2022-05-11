@@ -5,12 +5,12 @@ using System.Text;
 using GXPEngine;
 public class Rigidbody : Collider
 {
-    public float radius = 5;
+    public float radius = 32;
     public float weight = 1;
     public float bounciness = 0f;
     public float inertia = .5f;
 
-    public Vec2 gravity = new Vec2(0, 0);
+    public Vec2 gravity = new Vec2(0, .5f);
 
     public Vec2 velocity = new Vec2();
 

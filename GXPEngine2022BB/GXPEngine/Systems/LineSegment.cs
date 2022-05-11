@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using GXPEngine;
-public struct LineSegment
+using GXPEngine.Core;
+
+public class LineSegment : GameObject
 {
     public Vec2 start;
     public Vec2 end;
@@ -11,5 +13,13 @@ public struct LineSegment
     {
         start = pStart;
         end = pEnd;
+        game.AddChild(this);
+    }
+    override protected void RenderSelf(GLContext glContext)
+    {
+        if (game != null)
+        {
+            Gizmos.RenderLine(start.x, start.y, end.x, end.y, 0xffffffff, 1);
+        }
     }
 }
