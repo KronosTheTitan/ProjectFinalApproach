@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GXPEngine.GraplingHook;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,11 +30,20 @@ namespace GXPEngine
 
         float ropeLengthOld;
 
+        Rope line;
+
         private float NextGrappleLenght()
         {
             if (grappleOrign.Length() < ropeLength) return grappleOrign.Length();
             if (ropeLengthOld >= ropeLength) return ropeLengthOld *= .97f;
             return ropeLength;
+        }
+
+        private float NextGrappleLenghtBox()
+        {
+            if (grappleOrignBox.Length() < ropeLengthBox) return grappleOrignBox.Length();
+            if (ropeLengthOldBox >= ropeLengthBox) return ropeLengthOldBox *= .97f;
+            return ropeLengthBox;
         }
 
         private float NextRopeAccelerationInput()
@@ -156,16 +166,25 @@ namespace GXPEngine
             }
             return v;
         }
-        /*
+
         void UpdateGrapple()
         {
             isGrapple = false;
+            if (!Input.GetMouseButton(0)) return;
+            GrapplePoint gPoint = null;
+            foreach (GrapplePoint point in GXPEngine.Level.Level.grapplePoints)
+            {
+                if (!point.HitTestPoint(Input.mouseX, Input.mouseY)) continue;
+                gPoint = point;
+                break;
+            }
+            if (gPoint == null) return;
             if (Input.GetMouseButtonDown(0))
             {
-                rope = new Vec2(e.x + e.width / 2, e.y + e.height / 2);
-                grapple = new Vec2(canvas3.x + canvas3.width / 2, canvas3.y + canvas3.height / 2);
+                rope = new Vec2(_position.x + width / 2, _position.y + height / 2);
+                grapple = new Vec2(gPoint.x + gPoint.width / 2, gPoint.y + gPoint.height / 2);
 
-                ropeAngleVelocity = -.005f * e._velocity.x;
+                ropeAngleVelocity = -.005f * _velocity.x;
 
                 grappleOrign = rope - grapple;
 
@@ -175,9 +194,6 @@ namespace GXPEngine
 
                 ropeLengthOld = grappleOrign.Length();
             }
-            lines.ClearTransparent();
-            if (!Input.GetMouseButton(0)) return;
-            if (!canvas3.HitTestPoint(Input.mouseX, Input.mouseY)) return;
             //Console.WriteLine(NextRopeAccelerationInput());
             float ropeAcceleration = -.005f * (Mathf.Cos(ropeAngle) + NextRopeAccelerationInput());
             //Console.WriteLine(ropeAcceleration);
@@ -193,22 +209,91 @@ namespace GXPEngine
 
             v *= NextGrappleLenght();
 
-            left = ropeAngleVelocity > 0;
+            //left = ropeAngleVelocity > 0;
 
             //Console.WriteLine(ropeAngleVelocity);
 
             rope = grapple + v;
 
-            Vec2 speed = rope - new Vec2(e.x + e.width / 2, e.y + e.height / 2);
-            e._velocity = speed;
+            Vec2 speed = rope - new Vec2(_position.x + width / 2, _position.y + height / 2);
+            _velocity = speed;
 
-            lines.Line(grapple.x, grapple.y, rope.x, rope.y);
+            line.Set(grapple.x, grapple.y, rope.x, rope.y);
 
             isGrapple = true;
-        }*/
+        }
+
+        Vec2 player;
+        Vec2 grappleBox;
+
+        float ropeAngleVelocityBox;
+
+        Vec2 grappleOrignBox;
+
+        float ropeAngleBox;
+
+        float ropeLengthBox;
+
+        float ropeLengthOldBox;
+
+        void UpdateBoxGrapple()
+        {
+            if (isGrapple) return;
+            isGrapple = false;
+            if (!Input.GetMouseButton(0)) return;
+            Box box = null;
+            foreach (Box b in GXPEngine.Level.Level.boxes)
+            {
+                if (!b.HitTestPoint(Input.mouseX, Input.mouseY)) continue;
+                box = b;
+                Console.WriteLine("test");
+                break;
+            }
+
+            box = GXPEngine.Level.Level.boxes[0];
+
+            if (box == null) return;
+
+            if (Input.GetMouseButtonUp(0))
+            {
+                box._velocity.Zero();
+            }
+            if (Input.GetMouseButtonDown(0))
+            {
+                grappleBox = new Vec2(_position.x + width / 2, _position.y + height / 2);
+                player = new Vec2(box._position.x + box.width / 2, box._position.y + box.height / 2);
+
+                ropeAngleVelocityBox = -.005f * box._velocity.x;
+
+                grappleOrignBox = player - grappleBox;
+
+                ropeAngleBox = grappleOrignBox.GetAngleRadians() - Mathf.PI;
+
+                ropeLengthBox = 0;
+
+                ropeLengthOldBox = grappleOrignBox.Length();
+            }
+
+
+            Vec2 v = Vec2.GetUnitVectorRad(ropeAngleBox - Mathf.PI);
+
+            v *= NextGrappleLenghtBox();
+
+            //Console.WriteLine(ropeAngleVelocity);
+
+            player = grappleBox + v;
+
+            Vec2 speed = player - new Vec2(box._position.x + box.width / 2, box._position.y + box.height / 2);
+            box._velocity = speed;
+
+            line.Set(grappleBox.x, grappleBox.y, player.x, player.y);
+            isGrapple = true;
+        }
 
         public Player() : base("checkers.png")
         {
+            line = new Rope(0, 0, 0, 0);
+            Game.main.AddChild(line);
             _velocity = new Vec2();
             _position = new Vec2();
             _oldVelocity = new Vec2();
@@ -238,9 +323,9 @@ namespace GXPEngine
 
         private void Controlls()
         {
-            if (ignore) return;
             KeyUpdate();
-            if (!((moveLeft ^ moveRight) || (moveUp ^ moveDown))) _acceleration.x = 0;
+            _acceleration.x = 0;
+            if (isGrapple) return;
             if (moveRight ^ moveLeft) _acceleration.x = (moveLeft ? -1 : 1);
         }
 
@@ -250,21 +335,39 @@ namespace GXPEngine
             _oldPosition.y = _position.y;
             _oldVelocity = _velocity;
 
+
+            UpdateGrapple();
+            UpdateBoxGrapple();
+
+            Console.WriteLine(isGrapple);
+
             Controlls();
 
             Move();
 
+            /*
             foreach (Box box in GXPEngine.Level.Level.boxes)
             {
                 bool v = AABB(this, box);
                 if (!v)
                 {
                     box._velocity = _velocity;
-
                 }
             }
+            */
 
-            GXPEngine.Level.Level.CheckCollisions(this);
+            if (GXPEngine.Level.Level.CheckCollisions(this))
+            {
+                if (isGrapple)
+                {
+                    ropeAngleVelocity = 0;
+                    rope = new Vec2(_position.x + width / 2, _position.y + height / 2);
+                    grappleOrign = rope - grapple;
+
+                    ropeAngle = grappleOrign.GetAngleRadians() - Mathf.PI;
+                    ropeLengthOld = grappleOrign.Length();
+                }
+            }
 
             UpdatePosition();
         }

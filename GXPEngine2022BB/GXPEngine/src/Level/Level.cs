@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GXPEngine.GraplingHook;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,11 +12,15 @@ namespace GXPEngine.Level
         internal static List<Line> lines;
         public static Player player;
         public static List<Box> boxes;
+        public static List<GrapplePoint> grapplePoints;
 
         internal Manager manager;
 
         public Level()
         {
+            grapplePoints = new List<GrapplePoint>();
+            grapplePoints.Add(new GrapplePoint());
+
             manager = new Manager(Game.main);
             lines = new List<Line>();
             player = new Player()

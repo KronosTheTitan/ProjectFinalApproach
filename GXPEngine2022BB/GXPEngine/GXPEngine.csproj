@@ -44,6 +44,7 @@
     <Compile Include="src\ECS\EntityComponent.cs" />
     <Compile Include="src\Entity\Box.cs" />
     <Compile Include="src\Entity\Player.cs" />
+    <Compile Include="src\GraplingHook\GrapplePoint.cs" />
     <Compile Include="src\GraplingHook\Rope.cs" />
     <Compile Include="src\Level\Level.cs" />
     <Compile Include="src\Utils\FloatExtensions.cs" />
