@@ -20,11 +20,14 @@ public class MyGame : Game
     */
 
     Level level;
+    public static Camera camera;
 
-    public MyGame() : base(800, 600, false, false)     // Create a window that's 800x600 and NOT fullscreen
+    public MyGame() : base(800, 600, false, false, -1, -1, true)     // Create a window that's 800x600 and NOT fullscreen
     {
         targetFps = 60;
         level = new Level();
+        camera = new Camera(0, 0, 800, 600);
+        AddChild(camera);
         /*
         manager = new Manager(this);
 
