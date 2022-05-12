@@ -39,6 +39,8 @@ namespace GXPEngine.Level
 
             Box box = new Box(player);
 
+            box._position = new Vec2(400, 300);
+
             boxes.Add(box);
             manager.addEntity(box);
 
@@ -102,10 +104,17 @@ namespace GXPEngine.Level
             }
             return chosenLine;
         }
-
+        /// <summary>
+        /// Check if the passed in entity runs into any collisions
+        /// </summary>
+        /// <param name="e"></param>
+        /// <returns></returns>
         public static bool CheckCollisions(Entity e)
         {
+            //create a list of all the lines the entity collided with.
+
             List<Line> collidedLines = new List<Line>();
+
             for (int i = 0; i < lines.Count; i++)
             {
                 if (IsCollidingWithLine(lines[i], e))
@@ -115,11 +124,9 @@ namespace GXPEngine.Level
             }
             if (collidedLines.Count <= 0) return false;
 
-            //let chosenLine = this.GetPriorityCollision(collidedLines);
             Line chosenLine = GetPriorityCollision(collidedLines, e);
 
             bool isGrapple = e.GetType() == typeof(Player) && ((Player)e).isGrapple;
-            //Console.WriteLine(isGrapple);
 
             if (chosenLine.isHorizontal)
             {
