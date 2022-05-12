@@ -14,7 +14,6 @@ namespace GXPEngine.Level
             get { return _open; }   // get method
             set
             {
-                Console.WriteLine(value);
                 _open = value;
                 line.active = _open;
             }  // set method
