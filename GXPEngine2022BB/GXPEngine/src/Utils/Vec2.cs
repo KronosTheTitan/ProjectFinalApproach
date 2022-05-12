@@ -58,6 +58,18 @@ public struct Vec2
         return (float)Math.Sqrt(this.x * this.x + this.y * this.y);
     }
 
+    public float Dot(Vec2 other)
+    {
+        return x * other.x + y * other.y;
+    }
+
+    public Vec2 Normal()
+    {
+        Vec2 output = new Vec2(x * 0 - y * 1, x * 1 + y * 0);
+        output.Normalize();
+        return output;
+    }
+
     public static Vec2 operator +(Vec2 v, Vec2 v1)
     {
         v.x += v1.x;
