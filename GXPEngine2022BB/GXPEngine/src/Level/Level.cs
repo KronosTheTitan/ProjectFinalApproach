@@ -9,10 +9,12 @@ namespace GXPEngine.Level
 {
     public class Level
     {
-        internal static List<Line> lines;
+        public static List<Line> lines;
         public static Player player;
         public static List<Box> boxes;
         public static List<GrapplePoint> grapplePoints;
+        public static List<PressurePlate> pressurePlates;
+        public static List<Door> doors;
 
         internal Manager manager;
 
@@ -24,7 +26,8 @@ namespace GXPEngine.Level
         float height;
 
         public Level()
-        { 
+        {
+            pressurePlates = new List<PressurePlate>();
             background = new SpriteBatch();
 
             Sprite sp = new Sprite("Attic.png");
@@ -40,7 +43,7 @@ namespace GXPEngine.Level
                     y = i * scale
                 });
             }
-            for (int i = 1; i < 11; i++)
+            for (int i = 1; i < 22; i++)
             {
                 background.AddChild(new Sprite("Stone_Platform.png")
                 {
@@ -68,10 +71,16 @@ namespace GXPEngine.Level
             AddChild(background);
             background.Freeze();
 
+
+
             //
 
             grapplePoints = new List<GrapplePoint>();
             grapplePoints.Add(new GrapplePoint());
+
+            PressurePlate pressurePlate = new PressurePlate();
+
+            pressurePlates.Add(pressurePlate);
 
             manager = new Manager(Game.main);
             lines = new List<Line>();
@@ -86,6 +95,13 @@ namespace GXPEngine.Level
 
             lines.Add(new Line(32 * 2.1f, 32 * 2.1f, 32 * 2.1f, 32 * 4 * 2.1f));
             lines.Add(new Line(32 * 2.1f, 32 * 4 * 2.1f, 32 * 22 * 2.1f, 32 * 4 * 2.1f));
+
+            doors = new List<Door>();
+
+            Door d = new Door();
+
+            doors.Add(d);
+            pressurePlate.AddDoor(d);
 
             Box box = new Box(player);
             box._position.x = 32 * 2.1f;
@@ -123,6 +139,7 @@ namespace GXPEngine.Level
 
         public static bool IsCollidingWithLine(Line l, Entity e)
         {
+            if (!l.active) return false;
             return l.isHorizontal ?
                 ((l.x1 < e._position.x && e._position.x < l.x2) ||
                 (l.x1 < e._position.x + e.width && e._position.x + e.width < l.x2) ||

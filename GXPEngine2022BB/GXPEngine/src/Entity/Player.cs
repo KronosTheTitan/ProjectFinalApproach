@@ -174,7 +174,7 @@ namespace GXPEngine
             foreach (GrapplePoint point in GXPEngine.Level.Level.grapplePoints)
             {
                 if (!point.HitTestPoint(Input.mouseX, Input.mouseY)) continue;
-                Console.WriteLine("test");
+                //Console.WriteLine("test");
                 gPoint = point;
                 break;
             }
@@ -245,7 +245,7 @@ namespace GXPEngine
             Box box = null;
             foreach (Box b in GXPEngine.Level.Level.boxes)
             {
-                if (!b.HitTestPoint(Input.mouseX + MyGame.camera.x, Input.mouseY)) continue;
+                //if (!b.HitTestPoint(Input.mouseX, Input.mouseY)) continue;
                 box = b;
                 Console.WriteLine("test");
                 break;
