@@ -150,67 +150,30 @@ namespace GXPEngine
             }
             return false;
         }
-
-        Vec2 AABBPush(Entity a, Entity b)
-        {
-            Vec2 v;
-            float e_bottom = b._position.y + b.height;
-            float e1_bottom = a._position.y + a.height;
-            float e_right = b._position.x + b.width;
-            float e1_right = a._position.x + a.width;
-
-            float b_collision = e1_bottom - b._position.y;
-            float t_collision = e_bottom - a._position.y;
-            float l_collision = e_right - a._position.x;
-            float r_collision = e1_right - b._position.x;
-
-            v.x = a._position.x;
-            v.y = a._position.y;
-
-            if (!(e1_right >= b._position.x &&
-                e_right >= a._position.x &&
-                e1_bottom >= b._position.y &&
-                e_bottom >= a._position.y))
-            {
-                return v;
-            }
-
-            if (t_collision < b_collision && t_collision < l_collision && t_collision < r_collision)
-            {
-                v.y = a._position.y + (b._position.y + b.height - a._position.y);
-            }
-            else if (b_collision < t_collision && b_collision < l_collision && b_collision < r_collision)
-            {
-                //bottom
-                v.y = a._position.y - (b.height - b._position.y + a._position.y);
-                //v.y = a.y - b.y;
-            }
-            if (l_collision < r_collision && l_collision < t_collision && l_collision < b_collision)
-            {
-                //left
-                v.x = a._position.x + (b._position.x + b.width - a._position.x);
-            }
-            else if (r_collision < l_collision && r_collision < t_collision && r_collision < b_collision)
-            {
-                //right
-                v.x = a._position.x - (b.width - b._position.x + a._position.x);
-            }
-            return v;
-        }
+        GrapplePoint gPoint = null;
         void UpdateGrapple()
         {
-            isGrapple = false;
-            GrapplePoint gPoint = null;
-            foreach (GrapplePoint point in GXPEngine.Level.Level.grapplePoints)
+            if (!isGrapple)
             {
-                if (!point.HitTestPoint(Input.mouseX, Input.mouseY)) continue;
-                gPoint = point;
-                break;
+                gPoint = null;
+                foreach (GrapplePoint point in GXPEngine.Level.Level.grapplePoints)
+                {
+                    if (!point.HitTestPoint(Input.mouseX, Input.mouseY)) continue;
+                    //Console.WriteLine("test");
+                    gPoint = point;
+                    break;
+                }
+            }
+            if (Input.GetMouseButtonUp(0))
+            {
+                isGrapple = false;
+                line.Set(0, 0, 0, 0);
             }
             if (!Input.GetMouseButton(0)) return;
             if (gPoint == null) return;
             if (Input.GetMouseButtonDown(0) && grounded)
             {
+                isGrapple = true;
                 rope = new Vec2(_position.x + width / 2, _position.y + height / 2);
                 grapple = new Vec2(gPoint.x + gPoint.width / 2, gPoint.y + gPoint.height / 2);
 
@@ -242,7 +205,6 @@ namespace GXPEngine
 
             line.Set(grapple.x, grapple.y, rope.x, rope.y);
 
-            isGrapple = true;
         }
 
         Vec2 player;
@@ -258,30 +220,39 @@ namespace GXPEngine
 
         float ropeLengthOldBox;
 
+        bool BoxGrapple = false;
+
+        Box box;
+
         void UpdateBoxGrapple()
         {
-            if (isGrapple) return;
-            isGrapple = false;
-            if (!Input.GetMouseButton(0)) return;
-            Box box = null;
-            foreach (Box b in GXPEngine.Level.Level.boxes)
+            if (!BoxGrapple)
             {
-                //if (!b.HitTestPoint(Input.mouseX, Input.mouseY)) continue;
-                box = b;
-                Console.WriteLine("test");
-                break;
+                foreach (Box b in GXPEngine.Level.Level.boxes)
+                {
+                    if (!b.HitTestPoint(Input.mouseX, Input.mouseY)) continue;
+                    box = b;
+                    break;
+                }
             }
 
             //box = GXPEngine.Level.Level.boxes[0];
 
             if (box == null) return;
 
-            if (Input.GetMouseButtonUp(0) && grounded)
+            if (Input.GetMouseButtonUp(0))
             {
+                BoxGrapple = false;
                 box._velocity.Zero();
+                box = null;
+                line.Set(0, 0, 0, 0);
             }
-            if (Input.GetMouseButtonDown(0) && grounded)
+            if (!Input.GetMouseButton(0)) return;
+
+            if (!grounded) return;
+            if (Input.GetMouseButtonDown(0))
             {
+                BoxGrapple = true;
                 grappleBox = new Vec2(_position.x + width / 2, _position.y + height / 2);
                 player = new Vec2(box._position.x + box.width / 2, box._position.y + box.height / 2);
 
@@ -296,6 +267,7 @@ namespace GXPEngine
                 ropeLengthOldBox = grappleOrignBox.Length();
             }
 
+            if (!BoxGrapple) return;
 
             Vec2 v = Vec2.GetUnitVectorRad(ropeAngleBox - Mathf.PI);
 
@@ -308,8 +280,7 @@ namespace GXPEngine
             Vec2 speed = player - new Vec2(box._position.x + box.width / 2, box._position.y + box.height / 2);
             box._velocity = speed;
 
-            line.Set(grappleBox.x, grappleBox.y, player.x, player.y);
-            isGrapple = true;
+            line.Set(_position.x + width / 2, _position.y + height / 2, player.x, player.y);
         }
 
         public Player() : base("checkers.png")
@@ -347,7 +318,7 @@ namespace GXPEngine
         {
             KeyUpdate();
             _acceleration.x = 0;
-            if (isGrapple) return;
+            if (isGrapple || BoxGrapple) return;
             if (moveRight ^ moveLeft) _acceleration.x = (moveLeft ? -1 : 1);
         }
 
@@ -360,7 +331,7 @@ namespace GXPEngine
             UpdateGrapple();
             UpdateBoxGrapple();
 
-            Console.WriteLine(isGrapple);
+            //onsole.WriteLine(isGrapple);
 
             Controlls();
             Move();

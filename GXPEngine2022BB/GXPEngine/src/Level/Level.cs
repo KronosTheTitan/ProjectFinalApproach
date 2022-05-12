@@ -105,10 +105,8 @@ namespace GXPEngine.Level
             pressurePlate.AddDoor(d);
 
             Box box = new Box(player);
-            box._position.x = 32 * 2.1f;
-            box._position.y = 32 * 2 * 2.1f;
-
-            box._position = new Vec2(400, 200);
+            box._position.x = 32 * 4 * 2.1f;
+            box._position.y = 32 * 2.1f;
 
             boxes.Add(box);
             manager.addEntity(box);
