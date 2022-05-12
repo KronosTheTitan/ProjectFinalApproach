@@ -214,6 +214,11 @@ namespace GXPEngine
                 rope = new Vec2(_position.x + width / 2, _position.y + height / 2);
                 grapple = new Vec2(gPoint.x + gPoint.width / 2, gPoint.y + gPoint.height / 2);
 
+                if (Level.Level.RayCastLine(new Line(grapple.x, grapple.y, rope.x, rope.y)))
+                {
+                    return;
+                }
+
                 ropeAngleVelocity = -.005f * _velocity.x;
 
                 grappleOrign = rope - grapple;
@@ -289,6 +294,13 @@ namespace GXPEngine
                 grappleBox = new Vec2(_position.x + width / 2, _position.y + height / 2);
                 player = new Vec2(box._position.x + box.width / 2, box._position.y + box.height / 2);
 
+                if (Level.Level.RayCastLine(new Line(grappleBox.x, grappleBox.y, player.x, player.y)))
+                {
+                    return;
+                }
+
+                line.Set(grappleBox.x, grappleBox.y, player.x, player.y);
+
                 ropeAngleVelocityBox = -.005f * box._velocity.x;
 
                 grappleOrignBox = player - grappleBox;
@@ -312,7 +324,6 @@ namespace GXPEngine
             Vec2 speed = player - new Vec2(box._position.x + box.width / 2, box._position.y + box.height / 2);
             box._velocity = speed;
 
-            line.Set(grappleBox.x, grappleBox.y, player.x, player.y);
             isGrapple = true;
         }
 
