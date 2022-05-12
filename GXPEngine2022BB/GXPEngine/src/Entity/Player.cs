@@ -245,13 +245,13 @@ namespace GXPEngine
             Box box = null;
             foreach (Box b in GXPEngine.Level.Level.boxes)
             {
-                if (!b.HitTestPoint(Input.mouseX, Input.mouseY)) continue;
+                if (!b.HitTestPoint(Input.mouseX + MyGame.camera.x, Input.mouseY)) continue;
                 box = b;
                 Console.WriteLine("test");
                 break;
             }
 
-            box = GXPEngine.Level.Level.boxes[0];
+            //box = GXPEngine.Level.Level.boxes[0];
 
             if (box == null) return;
 
