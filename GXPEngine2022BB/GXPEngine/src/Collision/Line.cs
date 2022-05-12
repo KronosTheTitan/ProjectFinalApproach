@@ -19,6 +19,8 @@ namespace GXPEngine
 
         public Vec2 midPoint;
 
+        public bool active = true;
+
         public Line(float x1, float y1, float x2, float y2)
         {
             this.x1 = x1;
