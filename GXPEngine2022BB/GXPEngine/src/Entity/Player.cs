@@ -167,6 +167,39 @@ namespace GXPEngine
             return v;
         }
 
+        float GetTimeOfImpact(Entity other)
+        {
+            float t = 0;
+
+            float e_bottom = other._position.y + other.height;
+            float e1_bottom = _position.y + height;
+            float e_right = other.x + other.width;
+            float e1_right = _position.x + width;
+
+            float b_collision = e1_bottom - other._position.y;
+            float t_collision = e_bottom - _position.y;
+            float l_collision = e_right - _position.x;
+            float r_collision = e1_right - other._position.x;
+
+            if (t_collision < b_collision && t_collision < l_collision && t_collision < r_collision)
+            {
+                t = ((_oldPosition.y) - (other._position.y)) / (_oldPosition.y - _position.y);
+            }
+            else if (b_collision < t_collision && b_collision < l_collision && b_collision < r_collision)
+            {
+                t = ((other._position.y) - (_oldPosition.y)) / (_position.y - _oldPosition.y);
+            }
+            if (l_collision < r_collision && l_collision < t_collision && l_collision < b_collision)
+            {
+                t = ((_oldPosition.x) - (other._position.x)) / (_oldPosition.x - _position.x);
+            }
+            else if (r_collision < l_collision && r_collision < t_collision && r_collision < b_collision)
+            {
+                t = ((other._position.x) - (_oldPosition.x)) / (_position.x - _oldPosition.x);
+            }
+            return t;
+        }
+
         void UpdateGrapple()
         {
             isGrapple = false;
@@ -339,22 +372,43 @@ namespace GXPEngine
             UpdateGrapple();
             UpdateBoxGrapple();
 
-            Console.WriteLine(isGrapple);
+            //Console.WriteLine(isGrapple);
 
             Controlls();
 
             Move();
 
-            /*
+
+
+            Console.WriteLine("v = " + this._velocity);
+
+
             foreach (Box box in GXPEngine.Level.Level.boxes)
             {
                 bool v = AABB(this, box);
                 if (!v)
                 {
-                    box._velocity = _velocity;
+                    float totalMass = 1 + 1;
+
+                    Vec2 u = ((1*this._velocity + 1*box._velocity) / totalMass);
+
+                    float t = GetTimeOfImpact(box);
+
+                    Console.ForegroundColor = ConsoleColor.Green;
+
+                    Console.WriteLine("t = "+t);
+
+                    Console.WriteLine("p before = " + this._position);
+
+                    this._position = this._oldPosition + (this._velocity * t);
+
+                    Console.WriteLine("p after = " + this._position);
+
+                    this._velocity = box._velocity - (1 - 0) * (this._velocity - u);
+                    box._velocity = this._velocity - (1 - 0) * (box._velocity - u);
                 }
             }
-            */
+
 
             if (GXPEngine.Level.Level.CheckCollisions(this))
             {
