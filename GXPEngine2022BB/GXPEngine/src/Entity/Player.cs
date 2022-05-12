@@ -204,7 +204,6 @@ namespace GXPEngine
             foreach (GrapplePoint point in GXPEngine.Level.Level.grapplePoints)
             {
                 if (!point.HitTestPoint(Input.mouseX, Input.mouseY)) continue;
-                //Console.WriteLine("test");
                 gPoint = point;
                 break;
             }
@@ -235,10 +234,6 @@ namespace GXPEngine
             Vec2 v = Vec2.GetUnitVectorRad(ropeAngle - Mathf.PI);
 
             v *= NextGrappleLenght();
-
-            //left = ropeAngleVelocity > 0;
-
-            //Console.WriteLine(ropeAngleVelocity);
 
             rope = grapple + v;
 
@@ -380,8 +375,6 @@ namespace GXPEngine
                     Vec2 u = ((1*this._velocity + 1*box._velocity) / totalMass);
 
                     bool isTopOrBottom = AABBTop(this, box);
-
-                    Console.ForegroundColor = ConsoleColor.Green;
 
                     this._position = AABBMax(box, this);
                     if (isTopOrBottom) continue;

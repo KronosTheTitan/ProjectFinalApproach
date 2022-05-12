@@ -108,7 +108,7 @@ namespace GXPEngine.Level
             box._position.x = 32 * 2.1f;
             box._position.y = 32 * 2 * 2.1f;
 
-            box._position = new Vec2(400, 300);
+            box._position = new Vec2(400, 200);
 
             boxes.Add(box);
             manager.addEntity(box);
