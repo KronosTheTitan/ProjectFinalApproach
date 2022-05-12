@@ -46,7 +46,9 @@
     <Compile Include="src\Entity\Player.cs" />
     <Compile Include="src\GraplingHook\GrapplePoint.cs" />
     <Compile Include="src\GraplingHook\Rope.cs" />
+    <Compile Include="src\Level\Door.cs" />
     <Compile Include="src\Level\Level.cs" />
+    <Compile Include="src\Level\PressurePlate.cs" />
     <Compile Include="src\Utils\FloatExtensions.cs" />
     <Compile Include="src\Utils\Vec2.cs" />
     <Compile Include="MyGame.cs" />
@@ -78,6 +80,7 @@
     <Compile Include="GXPEngine\Utils\Time.cs" />
     <Compile Include="GXPEngine\Utils\Utils.cs" />
     <Compile Include="GXPEngine\AddOns\Camera.cs" />
+    <Compile Include="GXPEngine\AddOns\SpriteBatch.cs" />
     <Compile Include="GXPEngine\Managers\HierarchyManager.cs" />
     <Compile Include="GXPEngine\AddOns\Settings.cs" />
     <Compile Include="GXPEngine\AddOns\TiledMapParser.cs" />

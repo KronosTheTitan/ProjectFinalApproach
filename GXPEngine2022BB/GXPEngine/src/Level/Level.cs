@@ -9,35 +9,103 @@ namespace GXPEngine.Level
 {
     public class Level
     {
-        internal static List<Line> lines;
+        public static List<Line> lines;
         public static Player player;
         public static List<Box> boxes;
         public static List<GrapplePoint> grapplePoints;
+        public static List<PressurePlate> pressurePlates;
+        public static List<Door> doors;
 
         internal Manager manager;
 
+        internal SpriteBatch background;
+
+        internal int scale = 32;
+
+        float width;
+        float height;
+
         public Level()
         {
+            pressurePlates = new List<PressurePlate>();
+            background = new SpriteBatch();
+
+            Sprite sp = new Sprite("Attic.png");
+
+            width = sp.width * 2.1f;
+            height = sp.height * 2.1f;
+
+            background.AddChild(sp);
+            for (int i = 0; i < 9; i++)
+            {
+                background.AddChild(new Sprite("Stone_Platform.png")
+                {
+                    y = i * scale
+                });
+            }
+            for (int i = 1; i < 22; i++)
+            {
+                background.AddChild(new Sprite("Stone_Platform.png")
+                {
+                    x = i * scale
+                });
+            }
+            for (int i = 10; i < 22; i++)
+            {
+                background.AddChild(new Sprite("Stone_Platform.png")
+                {
+                    y = 1 * scale,
+                    x = i * scale
+                });
+            }
+            for (int i = 1; i < 22; i++)
+            {
+                background.AddChild(new Sprite("Stone_Platform.png")
+                {
+                    y = 4 * scale,
+                    x = i * scale
+                });
+            }
+
+            background.SetScaleXY(2.1f);
+            AddChild(background);
+            background.Freeze();
+
+
+
+            //
+
             grapplePoints = new List<GrapplePoint>();
             grapplePoints.Add(new GrapplePoint());
 
+            PressurePlate pressurePlate = new PressurePlate();
+
+            pressurePlates.Add(pressurePlate);
+
             manager = new Manager(Game.main);
             lines = new List<Line>();
-            player = new Player()
-            {
-                x = 500
-            };
+            player = new Player();
+            player._position.x = 32 * 2.1f;
+            player._position.y = 32 * 2 * 2.1f;
             manager.addEntity(player);
             boxes = new List<Box>();
 
 
             //Static for testing
 
-            lines.Add(new Line(200, 400, 700, 400));
-            lines.Add(new Line(0, 200, 200, 200));
-            lines.Add(new Line(200, 200, 200, 400));
+            lines.Add(new Line(32 * 2.1f, 32 * 2.1f, 32 * 2.1f, 32 * 4 * 2.1f));
+            lines.Add(new Line(32 * 2.1f, 32 * 4 * 2.1f, 32 * 22 * 2.1f, 32 * 4 * 2.1f));
+
+            doors = new List<Door>();
+
+            Door d = new Door();
+
+            doors.Add(d);
+            pressurePlate.AddDoor(d);
 
             Box box = new Box(player);
+            box._position.x = 32 * 2.1f;
+            box._position.y = 32 * 2 * 2.1f;
 
             box._position = new Vec2(400, 300);
 
@@ -61,10 +129,19 @@ namespace GXPEngine.Level
 
         public void LateUpdate()
         {
+            /*
+            float clampXMax = width - 800;
+            float clampYMax = height - 600;
+            Vector2 playerTransform = TransformPoint(player.x, player.y);
+            background.x = -Mathf.Clamp(playerTransform.x - (game.width - player.width) * .5f, 0, clampXMax);
+            background.y = -Mathf.Clamp(playerTransform.y - (game.height - player.height) * .5f, 0, clampYMax);
+            */
+            MyGame.camera.SetXY(player._position.x, 300);
         }
 
         public static bool IsCollidingWithLine(Line l, Entity e)
         {
+            if (!l.active) return false;
             return l.isHorizontal ?
                 ((l.x1 < e._position.x && e._position.x < l.x2) ||
                 (l.x1 < e._position.x + e.width && e._position.x + e.width < l.x2) ||

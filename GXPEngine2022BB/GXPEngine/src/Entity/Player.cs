@@ -170,14 +170,15 @@ namespace GXPEngine
         void UpdateGrapple()
         {
             isGrapple = false;
-            if (!Input.GetMouseButton(0)) return;
             GrapplePoint gPoint = null;
             foreach (GrapplePoint point in GXPEngine.Level.Level.grapplePoints)
             {
                 if (!point.HitTestPoint(Input.mouseX, Input.mouseY)) continue;
+                //Console.WriteLine("test");
                 gPoint = point;
                 break;
             }
+            if (!Input.GetMouseButton(0)) return;
             if (gPoint == null) return;
             if (Input.GetMouseButtonDown(0))
             {
@@ -244,13 +245,13 @@ namespace GXPEngine
             Box box = null;
             foreach (Box b in GXPEngine.Level.Level.boxes)
             {
-                if (!b.HitTestPoint(Input.mouseX, Input.mouseY)) continue;
+                //if (!b.HitTestPoint(Input.mouseX, Input.mouseY)) continue;
                 box = b;
                 Console.WriteLine("test");
                 break;
             }
 
-            box = GXPEngine.Level.Level.boxes[0];
+            //box = GXPEngine.Level.Level.boxes[0];
 
             if (box == null) return;
 
@@ -339,7 +340,7 @@ namespace GXPEngine
             UpdateGrapple();
             UpdateBoxGrapple();
 
-            Console.WriteLine(isGrapple);
+            //Console.WriteLine(isGrapple);
 
             Controlls();
 
