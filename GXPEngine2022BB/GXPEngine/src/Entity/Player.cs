@@ -55,6 +55,37 @@ namespace GXPEngine
             return Input.GetKey(Key.A) ? -0.1f : 0.1f;
         }
 
+        bool AABBTop(Entity a, Entity b)
+        {
+            float e_bottom = b._position.y + b.height;
+            float e1_bottom = a._position.y + a.height;
+            float e_right = b._position.x + b.width;
+            float e1_right = a._position.x + a.width;
+
+            float b_collision = e1_bottom - b._position.y;
+            float t_collision = e_bottom - a._position.y;
+            float l_collision = e_right - a._position.x;
+            float r_collision = e1_right - b._position.x;
+
+            if (!(e1_right >= b._position.x &&
+                e_right >= a._position.x &&
+                e1_bottom >= b._position.y &&
+                e_bottom >= a._position.y))
+            {
+                return false;
+            }
+
+            if (t_collision < b_collision && t_collision < l_collision && t_collision < r_collision)
+            {
+                return true;
+            }
+            else if (b_collision < t_collision && b_collision < l_collision && b_collision < r_collision)
+            {
+                return true;
+            }
+            return false;
+        }
+
         Vec2 AABBMax(Entity a, Entity b)
         {
             Vec2 v;
@@ -166,40 +197,6 @@ namespace GXPEngine
             }
             return v;
         }
-
-        float GetTimeOfImpact(Entity other)
-        {
-            float t = 0;
-
-            float e_bottom = other._position.y + other.height;
-            float e1_bottom = _position.y + height;
-            float e_right = other.x + other.width;
-            float e1_right = _position.x + width;
-
-            float b_collision = e1_bottom - other._position.y;
-            float t_collision = e_bottom - _position.y;
-            float l_collision = e_right - _position.x;
-            float r_collision = e1_right - other._position.x;
-
-            if (t_collision < b_collision && t_collision < l_collision && t_collision < r_collision)
-            {
-                t = ((_oldPosition.y) - (other._position.y)) / (_oldPosition.y - _position.y);
-            }
-            else if (b_collision < t_collision && b_collision < l_collision && b_collision < r_collision)
-            {
-                t = ((other._position.y) - (_oldPosition.y)) / (_position.y - _oldPosition.y);
-            }
-            if (l_collision < r_collision && l_collision < t_collision && l_collision < b_collision)
-            {
-                t = ((_oldPosition.x) - (other._position.x)) / (_oldPosition.x - _position.x);
-            }
-            else if (r_collision < l_collision && r_collision < t_collision && r_collision < b_collision)
-            {
-                t = ((other._position.x) - (_oldPosition.x)) / (_position.x - _oldPosition.x);
-            }
-            return t;
-        }
-
         void UpdateGrapple()
         {
             isGrapple = false;
@@ -212,7 +209,7 @@ namespace GXPEngine
                 break;
             }
             if (gPoint == null) return;
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && grounded)
             {
                 rope = new Vec2(_position.x + width / 2, _position.y + height / 2);
                 grapple = new Vec2(gPoint.x + gPoint.width / 2, gPoint.y + gPoint.height / 2);
@@ -223,18 +220,14 @@ namespace GXPEngine
 
                 ropeAngle = grappleOrign.GetAngleRadians() - Mathf.PI;
 
-                ropeLength = 300;
+                ropeLength = 200;
 
                 ropeLengthOld = grappleOrign.Length();
             }
-            //Console.WriteLine(NextRopeAccelerationInput());
-            float ropeAcceleration = -.005f * (Mathf.Cos(ropeAngle) + NextRopeAccelerationInput());
-            //Console.WriteLine(ropeAcceleration);
-            ropeAngleVelocity += ropeAcceleration;
-            //Console.WriteLine(ropeAngle);
-            ropeAngle += ropeAngleVelocity;
 
-            //Console.WriteLine(ropeAngleVelocity);
+            float ropeAcceleration = -.005f * (Mathf.Cos(ropeAngle) + NextRopeAccelerationInput());
+            ropeAngleVelocity += ropeAcceleration;
+            ropeAngle += ropeAngleVelocity;
 
             ropeAngleVelocity *= .99f;
 
@@ -287,11 +280,11 @@ namespace GXPEngine
 
             if (box == null) return;
 
-            if (Input.GetMouseButtonUp(0))
+            if (Input.GetMouseButtonUp(0) && grounded)
             {
                 box._velocity.Zero();
             }
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && grounded)
             {
                 grappleBox = new Vec2(_position.x + width / 2, _position.y + height / 2);
                 player = new Vec2(box._position.x + box.width / 2, box._position.y + box.height / 2);
@@ -348,9 +341,9 @@ namespace GXPEngine
             moveRight = Input.GetKey(Key.D);
             moveDown = Input.GetKey(Key.S);
 
-            if (Input.GetKey(Key.SPACE))
+            if (Input.GetKey(Key.SPACE) && grounded)
             {
-                _velocity.y = -20;
+                _velocity.y = -30;
             }
         }
 
@@ -368,20 +361,10 @@ namespace GXPEngine
             _oldPosition.y = _position.y;
             _oldVelocity = _velocity;
 
-
             UpdateGrapple();
             UpdateBoxGrapple();
-
-            //Console.WriteLine(isGrapple);
-
             Controlls();
-
             Move();
-
-
-
-            Console.WriteLine("v = " + this._velocity);
-
 
             foreach (Box box in GXPEngine.Level.Level.boxes)
             {
@@ -392,26 +375,21 @@ namespace GXPEngine
 
                     Vec2 u = ((1*this._velocity + 1*box._velocity) / totalMass);
 
-                    float t = GetTimeOfImpact(box);
+                    bool isTopOrBottom = AABBTop(this, box);
 
                     Console.ForegroundColor = ConsoleColor.Green;
 
-                    Console.WriteLine("t = "+t);
+                    this._position = AABBMax(box, this);
+                    if (isTopOrBottom) continue;
 
-                    Console.WriteLine("p before = " + this._position);
-
-                    this._position = this._oldPosition + (this._velocity * t);
-
-                    Console.WriteLine("p after = " + this._position);
-
-                    this._velocity = box._velocity - (1 - 0) * (this._velocity - u);
-                    box._velocity = this._velocity - (1 - 0) * (box._velocity - u);
+                    box._velocity.x = this._velocity.x - (1 - 0) * (box._velocity.x - u.x);
                 }
             }
 
 
             if (GXPEngine.Level.Level.CheckCollisions(this))
             {
+                grounded = true;
                 if (isGrapple)
                 {
                     ropeAngleVelocity = 0;
@@ -421,6 +399,10 @@ namespace GXPEngine
                     ropeAngle = grappleOrign.GetAngleRadians() - Mathf.PI;
                     ropeLengthOld = grappleOrign.Length();
                 }
+            }
+            else
+            {
+                grounded = false;
             }
 
             UpdatePosition();
@@ -434,10 +416,6 @@ namespace GXPEngine
                 _velocity *= .9f;
             }
             _position += _velocity;
-
-
-            //MoveUntilCollision(_velocity.x, 0);
-            //MoveUntilCollision(0, _velocity.y);
         }
     }
 }

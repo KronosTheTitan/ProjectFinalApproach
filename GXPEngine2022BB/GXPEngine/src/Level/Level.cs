@@ -10,6 +10,11 @@ namespace GXPEngine.Level
     public class Level
     {
         internal static List<Line> lines;
+
+        internal SpriteBatch background;
+
+        internal int scale = 32;
+
         public static Player player;
         public static List<Box> boxes;
         public static List<GrapplePoint> grapplePoints;
@@ -76,6 +81,38 @@ namespace GXPEngine.Level
                 (e._position.y < l.y1 && l.y1 < e._position.y + e.height) ||
                 (e._position.y < l.y2 && l.y2 < e._position.y + e.height)) &&
                 e._position.x < l.x1 && l.x1 < e._position.x + e.width;
+        }
+        public static bool RayCastLine(Line line)
+        {
+            foreach(Line line1 in lines)
+            {
+                Vec2 line1Start = new Vec2(line1.x1, line1.x2);
+                Vec2 line1End = new Vec2(line1.x2, line1.y2);
+
+                Vec2 lineStart = new Vec2(line.x1,line.y1);
+
+                Vec2 lineEnd = new Vec2(line.x2, line.y2);
+
+                Vec2 LineNormal = (line1Start-line1End).Normal();
+
+                Vec2 lineToStart = lineStart - line1Start;
+                Vec2 LineToEnd = lineEnd - line1Start;
+
+                float dotStart = lineToStart.Dot(LineNormal);
+                float dotEnd = LineToEnd.Dot(LineNormal);
+                if (dotStart < 0)
+                {
+                    if (dotEnd > 0)
+                    {
+
+                    }
+                }
+                else
+                {
+
+                }
+            }
+            return false;
         }
 
         public static Line GetPriorityCollision(List<Line> collidedLines, Entity e)

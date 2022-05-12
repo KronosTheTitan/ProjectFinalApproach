@@ -75,6 +75,7 @@
     <Compile Include="GXPEngine\Utils\Input.cs" />
     <Compile Include="GXPEngine\Utils\Key.cs" />
     <Compile Include="GXPEngine\AddOns\MouseHandler.cs" />
+    <Compile Include="GXPEngine\AddOns\SpriteBatch.cs" />
     <Compile Include="GXPEngine\Utils\Time.cs" />
     <Compile Include="GXPEngine\Utils\Utils.cs" />
     <Compile Include="GXPEngine\AddOns\Camera.cs" />
