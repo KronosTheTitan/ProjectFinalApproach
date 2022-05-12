@@ -39,21 +39,21 @@ namespace GXPEngine.Level
             background.AddChild(sp);
             for (int i = 0; i < 9; i++)
             {
-                background.AddChild(new Sprite("Stone_Platform.png")
+                background.AddChild(new Sprite("Wood_Platform.png")
                 {
                     y = i * scale
                 });
             }
             for (int i = 1; i < 22; i++)
             {
-                background.AddChild(new Sprite("Stone_Platform.png")
+                background.AddChild(new Sprite("Wood_Platform.png")
                 {
                     x = i * scale
                 });
             }
             for (int i = 10; i < 22; i++)
             {
-                background.AddChild(new Sprite("Stone_Platform.png")
+                background.AddChild(new Sprite("Wood_Platform.png")
                 {
                     y = 1 * scale,
                     x = i * scale
@@ -61,7 +61,7 @@ namespace GXPEngine.Level
             }
             for (int i = 1; i < 22; i++)
             {
-                background.AddChild(new Sprite("Stone_Platform.png")
+                background.AddChild(new Sprite("Wood_Platform.png")
                 {
                     y = 4 * scale,
                     x = i * scale
@@ -155,34 +155,6 @@ namespace GXPEngine.Level
         }
         public static bool RayCastLine(Line line)
         {
-            foreach(Line line1 in lines)
-            {
-                Vec2 line1Start = new Vec2(line1.x1, line1.x2);
-                Vec2 line1End = new Vec2(line1.x2, line1.y2);
-
-                Vec2 lineStart = new Vec2(line.x1,line.y1);
-
-                Vec2 lineEnd = new Vec2(line.x2, line.y2);
-
-                Vec2 LineNormal = (line1Start-line1End).Normal();
-
-                Vec2 lineToStart = lineStart - line1Start;
-                Vec2 LineToEnd = lineEnd - line1Start;
-
-                float dotStart = lineToStart.Dot(LineNormal);
-                float dotEnd = LineToEnd.Dot(LineNormal);
-                if (dotStart < 0)
-                {
-                    if (dotEnd > 0)
-                    {
-
-                    }
-                }
-                else
-                {
-
-                }
-            }
             return false;
         }
 

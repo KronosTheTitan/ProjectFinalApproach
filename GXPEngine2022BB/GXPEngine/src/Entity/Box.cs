@@ -13,7 +13,7 @@ namespace GXPEngine
 
         Vec2 player;
 
-        public Box(Player pP) : base("checkers.png")
+        public Box(Player pP) : base("crate.png")
         {
             p = pP;
             _velocity = new Vec2();
@@ -21,6 +21,8 @@ namespace GXPEngine
             _oldVelocity = new Vec2();
             _oldPosition = new Vec2();
             _acceleration = new Vec2(0, 2);
+            width = 64;
+            height = 64;
         }
 
 

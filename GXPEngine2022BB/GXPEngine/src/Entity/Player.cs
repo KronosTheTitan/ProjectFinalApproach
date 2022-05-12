@@ -295,7 +295,18 @@ namespace GXPEngine
             line.Set(_position.x + width / 2, _position.y + height / 2, player.x, player.y);
         }
 
-        public Player() : base("checkers.png")
+        enum PlayerState
+        {
+            Walking,
+            Jump,
+            Idle,
+            Falling,
+            Grappling
+        }
+
+        PlayerState state = PlayerState.Idle;
+
+        public Player() : base("player.png",26,7)
         {
             line = new Rope(0, 0, 0, 0);
             Game.main.AddChild(line);
@@ -304,6 +315,8 @@ namespace GXPEngine
             _oldVelocity = new Vec2();
             _oldPosition = new Vec2();
             _acceleration = new Vec2(0, 2);
+            width = 64;
+            height = 64;
         }
 
         public void UpdatePosition()
@@ -385,7 +398,65 @@ namespace GXPEngine
                 grounded = false;
             }
 
+            bool updateAnimation = false;
+
+            if (_velocity.Length()<18.1f && grounded)
+            {
+                if (BoxGrapple)
+                    state = PlayerState.Grappling;
+                state = PlayerState.Idle;
+            }
+            else
+            {
+                if (grounded)
+                {
+                    state = PlayerState.Walking;
+                }
+                else
+                {
+                    if (_velocity.y < 0)
+                        state = PlayerState.Jump;
+                    else
+                        state = PlayerState.Falling;
+                }
+            }
+
             UpdatePosition();
+            UpdateAnimation();
+
+            Animate(0.2f);
+        }
+
+        void UpdateAnimation()
+        {
+            if (_velocity.x < 0)
+            {
+                scaleX = -2;
+                SetOrigin(32, 0);
+            }
+            else
+            {
+                scaleX = 2;
+                SetOrigin(0, 0);
+            }
+            switch (state)
+            {
+                case PlayerState.Idle:
+                    SetCycle(79, 11);
+                    break;
+                case PlayerState.Walking:
+                    SetCycle(130, 22);
+                    break;
+                case PlayerState.Falling:
+                    SetCycle(0, 1);
+                    break;
+                case PlayerState.Jump:
+                    SetCycle(104, 22);
+                    break;
+                case PlayerState.Grappling:
+                    SetCycle(202,6);
+                    break;
+            }
         }
 
         void Move()
