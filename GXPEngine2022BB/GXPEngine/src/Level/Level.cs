@@ -136,7 +136,7 @@ namespace GXPEngine.Level
             background.x = -Mathf.Clamp(playerTransform.x - (game.width - player.width) * .5f, 0, clampXMax);
             background.y = -Mathf.Clamp(playerTransform.y - (game.height - player.height) * .5f, 0, clampYMax);
             */
-            MyGame.camera.SetXY(player._position.x, 300);
+            Game.main.x = -player._position.x + 400;
         }
 
         public static bool IsCollidingWithLine(Line l, Entity e)
