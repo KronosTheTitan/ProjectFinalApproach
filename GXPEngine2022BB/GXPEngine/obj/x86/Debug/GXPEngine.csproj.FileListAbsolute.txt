@@ -6,6 +6,7 @@ D:\02 GameDev\ProjectFinalApproach\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEn
 D:\02 GameDev\ProjectFinalApproach\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEngine.pdb
 D:\07 School\ProjectFinalApproach\GXPEngine2022BB\GXPEngine\bin\Debug\GXPEngine.exe
 D:\07 School\ProjectFinalApproach\GXPEngine2022BB\GXPEngine\bin\Debug\GXPEngine.pdb
+D:\07 School\ProjectFinalApproach\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEngine.csproj.AssemblyReference.cache
 D:\07 School\ProjectFinalApproach\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEngine.csproj.CoreCompileInputs.cache
 D:\07 School\ProjectFinalApproach\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEngine.exe
 D:\07 School\ProjectFinalApproach\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEngine.pdb
@@ -20,4 +21,4 @@ F:\Projecten\Saxion\ProjectFinalApproach\GXPEngine2022BB\GXPEngine\obj\x86\Debug
 F:\Projecten\Saxion\ProjectFinalApproach\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEngine.csproj.CoreCompileInputs.cache
 F:\Projecten\Saxion\ProjectFinalApproach\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEngine.exe
 F:\Projecten\Saxion\ProjectFinalApproach\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEngine.pdb
-D:\07 School\ProjectFinalApproach\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEngine.csproj.AssemblyReference.cache
+C:\Projecten\GitHub\ProjectFinalApproach\GXPEngine2022BB\GXPEngine\obj\x86\Debug\GXPEngine.csproj.AssemblyReference.cache

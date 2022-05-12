@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using static GXPEngine.ECS.EntityComponent;
 
 namespace GXPEngine
 {
-    class KeyboardComponent : ECS.EntityComponent.Component
+    class KeyboardComponent : Component
     {
         public bool moveLeft, moveRight, moveUp, moveDown;
 
