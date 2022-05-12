@@ -26,8 +26,6 @@ public class MyGame : Game
     {
         targetFps = 60;
         level = new Level();
-        camera = new Camera(0, 0, 800, 600);
-        AddChild(camera);
     }
 
     static void Main()                          // Main() is the first method that's called when the program is run
