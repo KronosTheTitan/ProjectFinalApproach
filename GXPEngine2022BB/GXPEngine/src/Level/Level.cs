@@ -95,7 +95,76 @@ namespace GXPEngine.Level
             //Static for testing
 
             lines.Add(new Line(32 * 2.1f, 32 * 2.1f, 32 * 2.1f, 32 * 4 * 2.1f));
-            lines.Add(new Line(32 * 2.1f, 32 * 4 * 2.1f, 32 * 22 * 2.1f, 32 * 4 * 2.1f));
+            lines.Add(new Line(32 * 2.1f, 32 * 4 * 2.1f, 32 * 18 * 2.1f, 32 * 4 * 2.1f));
+
+            lines.Add(new Line(32 * 2.1f, 32 * 1 * 2.1f, 32 * 10 * 2.1f, 32 * 1 * 2.1f));
+            lines.Add(new Line(32 * 10 * 2.1f, 32 * 1 * 2.1f, 32 * 10 * 2.1f, 32 * 2 * 2.1f));
+
+            lines.Add(new Line(32 * 10 * 2.1f, 32 * 2 * 2.1f, 32 * 21 * 2.1f, 32 * 2 * 2.1f));
+            lines.Add(new Line(32 * 21 * 2.1f, 32 * 2 * 2.1f, 32 * 21 * 2.1f, 32 * 0 * 2.1f));
+
+            lines.Add(new Line(32 * 21 * 2.1f, 32 * 0 * 2.1f, 32 * 25 * 2.1f, 34 * 0 * 2.1f));
+            lines.Add(new Line(32 * 25 * 2.1f, 32 * 0 * 2.1f, 32 * 25 * 2.1f, 32 * 1 * 2.1f));
+
+            lines.Add(new Line(32 * 25 * 2.1f, 32 * 1 * 2.1f, 32 * 27 * 2.1f, 32 * 1 * 2.1f));
+            lines.Add(new Line(32 * 27 * 2.1f, 32 * 1 * 2.1f, 32 * 27 * 2.1f, 32 * 2 * 2.1f));
+
+            lines.Add(new Line(32 * 27 * 2.1f, 32 * 2 * 2.1f, 32 * 31 * 2.1f, 32 * 2 * 2.1f));
+            lines.Add(new Line(32 * 31 * 2.1f, 32 * 2 * 2.1f, 32 * 31 * 2.1f, 32 * 3 * 2.1f));
+
+            lines.Add(new Line(32 * 31 * 2.1f, 32 * 3 * 2.1f, 32 * 44 * 2.1f, 32 * 3 * 2.1f));
+            lines.Add(new Line(32 * 44 * 2.1f, 32 * 3 * 2.1f, 32 * 44 * 2.1f, 32 * 2 * 2.1f));
+
+            lines.Add(new Line(32 * 44 * 2.1f, 32 * 3 * 2.1f, 32 * 44 * 2.1f, 32 * 2 * 2.1f));
+            lines.Add(new Line(32 * 44 * 2.1f, 32 * 3 * 2.1f, 32 * 44 * 2.1f, 32 * 2 * 2.1f));
+
+            lines.Add(new Line(32 * 44 * 2.1f, 32 * 2 * 2.1f, 32 * 47 * 2.1f, 32 * 2 * 2.1f));
+            lines.Add(new Line(32 * 47 * 2.1f, 32 * 2 * 2.1f, 32 * 47 * 2.1f, 32 * 0 * 2.1f));
+
+            lines.Add(new Line(32 * 47 * 2.1f, 32 * 0 * 2.1f, 32 * 48 * 2.1f, 32 * 0 * 2.1f));
+            lines.Add(new Line(32 * 48 * 2.1f, 32 * 0 * 2.1f, 32 * 48 * 2.1f, 32 * 2 * 2.1f));
+
+            lines.Add(new Line(32 * 48 * 2.1f, 32 * 2 * 2.1f, 32 * 53 * 2.1f, 32 * 2 * 2.1f));
+            lines.Add(new Line(32 * 53 * 2.1f, 32 * 2 * 2.1f, 32 * 53 * 2.1f, 32 * 7 * 2.1f));
+
+            lines.Add(new Line(32 * 53 * 2.1f, 32 * 7 * 2.1f, 32 * 49 * 2.1f, 32 * 7 * 2.1f));
+            lines.Add(new Line(32 * 49 * 2.1f, 32 * 7 * 2.1f, 32 * 49 * 2.1f, 32 * 8 * 2.1f));
+
+            lines.Add(new Line(32 * 49 * 2.1f, 32 * 7 * 2.1f, 32 * 49 * 2.1f, 32 * 8 * 2.1f));
+            lines.Add(new Line(32 * 49 * 2.1f, 32 * 7 * 2.1f, 32 * 49 * 2.1f, 32 * 8 * 2.1f));
+
+            lines.Add(new Line(32 * 49 * 2.1f, 32 * 8 * 2.1f, 32 * 48 * 2.1f, 32 * 8 * 2.1f));
+            lines.Add(new Line(32 * 49 * 2.1f, 32 * 8 * 2.1f, 32 * 49 * 2.1f, 32 * 7 * 2.1f));
+
+            lines.Add(new Line(32 * 48 * 2.1f, 32 * 7 * 2.1f, 32 * 44 * 2.1f, 32 * 7 * 2.1f));
+            lines.Add(new Line(32 * 48 * 2.1f, 32 * 8 * 2.1f, 32 * 48 * 2.1f, 32 * 7 * 2.1f));
+
+            lines.Add(new Line(32 * 44 * 2.1f, 32 * 7 * 2.1f, 32 * 44 * 2.1f, 32 * 6 * 2.1f));
+            lines.Add(new Line(32 * 49 * 2.1f, 32 * 7 * 2.1f, 32 * 49 * 2.1f, 32 * 8 * 2.1f));
+
+            lines.Add(new Line(32 * 49 * 2.1f, 32 * 7 * 2.1f, 32 * 49 * 2.1f, 32 * 8 * 2.1f));
+            lines.Add(new Line(32 * 44 * 2.1f, 32 * 6 * 2.1f, 32 * 42 * 2.1f, 32 * 6 * 2.1f));
+
+            lines.Add(new Line(32 * 42 * 2.1f, 32 * 6 * 2.1f, 32 * 42 * 2.1f, 32 * 5 * 2.1f));
+            lines.Add(new Line(32 * 42 * 2.1f, 32 * 5 * 2.1f, 32 * 38 * 2.1f, 32 * 5 * 2.1f));
+
+            lines.Add(new Line(32 * 38 * 2.1f, 32 * 5 * 2.1f, 32 * 38 * 2.1f, 32 * 6 * 2.1f));
+            lines.Add(new Line(32 * 38 * 2.1f, 32 * 6 * 2.1f, 32 * 37 * 2.1f, 32 * 6 * 2.1f));
+
+            lines.Add(new Line(32 * 37 * 2.1f, 32 * 6 * 2.1f, 32 * 37 * 2.1f, 32 * 5 * 2.1f));
+            lines.Add(new Line(32 * 37 * 2.1f, 32 * 5 * 2.1f, 32 * 30 * 2.1f, 32 * 5 * 2.1f));
+
+            lines.Add(new Line(32 * 30 * 2.1f, 32 * 5 * 2.1f, 32 * 30 * 2.1f, 32 * 4 * 2.1f));
+            lines.Add(new Line(32 * 30 * 2.1f, 32 * 4 * 2.1f, 32 * 25 * 2.1f, 32 * 4 * 2.1f));
+
+            lines.Add(new Line(32 * 25 * 2.1f, 32 * 4 * 2.1f, 32 * 25 * 2.1f, 32 * 6 * 2.1f));
+            lines.Add(new Line(32 * 25 * 2.1f, 32 * 6 * 2.1f, 32 * 21 * 2.1f, 32 * 6 * 2.1f));
+
+            lines.Add(new Line(32 * 21 * 2.1f, 32 * 6 * 2.1f, 32 * 21 * 2.1f, 32 * 5 * 2.1f));
+            lines.Add(new Line(32 * 21 * 2.1f, 32 * 5 * 2.1f, 32 * 18 * 2.1f, 32 * 5 * 2.1f));
+
+            lines.Add(new Line(32 * 18 * 2.1f, 32 * 5 * 2.1f, 32 * 18 * 2.1f, 32 * 4 * 2.1f));
+
 
             doors = new List<Door>();
 
