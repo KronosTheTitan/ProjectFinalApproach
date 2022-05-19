@@ -128,16 +128,14 @@ namespace GXPEngine.Level
             lines.Add(new Line(32 * 53 * 2.1f, 32 * 2 * 2.1f, 32 * 53 * 2.1f, 32 * 7 * 2.1f));
 
             lines.Add(new Line(32 * 53 * 2.1f, 32 * 7 * 2.1f, 32 * 49 * 2.1f, 32 * 7 * 2.1f));
-            lines.Add(new Line(32 * 49 * 2.1f, 32 * 7 * 2.1f, 32 * 49 * 2.1f, 32 * 8 * 2.1f));
 
-            lines.Add(new Line(32 * 49 * 2.1f, 32 * 7 * 2.1f, 32 * 49 * 2.1f, 32 * 8 * 2.1f));
-            lines.Add(new Line(32 * 49 * 2.1f, 32 * 7 * 2.1f, 32 * 49 * 2.1f, 32 * 8 * 2.1f));
+            lines.Add(new Line(32 * 49 * 2.1f, 32 * 7 * 2.1f, 32 * 49 * 2.1f, 32 * 18 * 2.1f));
 
-            lines.Add(new Line(32 * 49 * 2.1f, 32 * 8 * 2.1f, 32 * 48 * 2.1f, 32 * 8 * 2.1f));
-            lines.Add(new Line(32 * 49 * 2.1f, 32 * 8 * 2.1f, 32 * 49 * 2.1f, 32 * 7 * 2.1f));
+            //lines.Add(new Line(32 * 49 * 2.1f, 32 * 8 * 2.1f, 32 * 48 * 2.1f, 32 * 8 * 2.1f));
+            lines.Add(new Line(32 * 49 * 2.1f, 32 * 18 * 2.1f, 32 * 49 * 2.1f, 32 * 7 * 2.1f));
 
             lines.Add(new Line(32 * 48 * 2.1f, 32 * 7 * 2.1f, 32 * 44 * 2.1f, 32 * 7 * 2.1f));
-            lines.Add(new Line(32 * 48 * 2.1f, 32 * 8 * 2.1f, 32 * 48 * 2.1f, 32 * 7 * 2.1f));
+            lines.Add(new Line(32 * 48 * 2.1f, 32 * 20 * 2.1f, 32 * 48 * 2.1f, 32 * 7 * 2.1f));
 
             lines.Add(new Line(32 * 44 * 2.1f, 32 * 7 * 2.1f, 32 * 44 * 2.1f, 32 * 6 * 2.1f));
             lines.Add(new Line(32 * 49 * 2.1f, 32 * 7 * 2.1f, 32 * 49 * 2.1f, 32 * 8 * 2.1f));
@@ -177,15 +175,30 @@ namespace GXPEngine.Level
             lines.Add(new Line(32 * 69 * 2.1f, 32 * 17 * 2.1f, 32 * 69 * 2.1f, 32 * 20 * 2.1f));
 
             lines.Add(new Line(32 * 69 * 2.1f, 32 * 20 * 2.1f, 32 * 63 * 2.1f, 32 * 20 * 2.1f));
-            lines.Add(new Line(32 * 63 * 2.1f, 32 * 20 * 2.1f, 32 * 63 * 2.1f, 32 * 19 * 2.1f));
+            lines.Add(new Line(32 * 59 * 2.1f, 32 * 19 * 2.1f, 32 * 63 * 2.1f, 32 * 19 * 2.1f));
 
-            lines.Add(new Line(32 * 63 * 2.1f, 32 * 19 * 2.1f, 32 * 67 * 2.1f, 32 * 19 * 2.1f));
-            lines.Add(new Line(32 * 67 * 2.1f, 32 * 19 * 2.1f, 32 * 67 * 2.1f, 32 * 20 * 2.1f));
+            lines.Add(new Line(32 * 48 * 2.1f, 32 * 20 * 2.1f, 32 * 59 * 2.1f, 32 * 20 * 2.1f));
 
-            lines.Add(new Line(32 * 63 * 2.1f, 32 * 20 * 2.1f, 32 * 58 * 2.1f, 32 * 20 * 2.1f));
-            lines.Add(new Line(32 * 59 * 2.1f, 32 * 20 * 2.1f, 32 * 50 * 2.1f, 32 * 20 * 2.1f));
+            lines.Add(new Line(32 * 50 * 2.1f, 32 * 18 * 2.1f, 32 * 50 * 2.1f, 32 * 8 * 2.1f));
+             
+            lines.Add(new Line(32 * 49 * 2.1f, 32 * 18 * 2.1f, 32 * 50 * 2.1f, 32 * 18 * 2.1f));
 
-            lines.Add(new Line(32 * 50 * 2.1f, 32 * 20 * 2.1f, 32 * 50 * 2.1f, 32 * 8 * 2.1f));
+            lines.Add(new Line(32 * 59 * 2.1f, 32 * 19 * 2.1f, 32 * 59 * 2.1f, 32 * 20 * 2.1f));
+            lines.Add(new Line(32 * 63 * 2.1f, 32 * 19 * 2.1f, 32 * 63 * 2.1f, 32 * 20 * 2.1f));
+
+            lines.Add(new Line(32 * 50 * 2.1f, 32 * 13 * 2.1f, 32 * 51 * 2.1f, 32 * 13 * 2.1f));
+            lines.Add(new Line(32 * 52 * 2.1f, 32 * 13 * 2.1f, 32 * 56 * 2.1f, 32 * 13 * 2.1f));
+
+            lines.Add(new Line(32 * 56 * 2.1f, 32 * 13 * 2.1f, 32 * 56 * 2.1f, 32 * 12 * 2.1f));
+            lines.Add(new Line(32 * 55 * 2.1f, 32 * 12 * 2.1f, 32 * 56 * 2.1f, 32 * 12 * 2.1f));
+            lines.Add(new Line(32 * 55 * 2.1f, 32 * 12 * 2.1f, 32 * 55 * 2.1f, 32 * 13 * 2.1f));
+
+            lines.Add(new Line(32 * 56 * 2.1f, 32 * 15 * 2.1f, 32 * 58 * 2.1f, 32 * 15 * 2.1f));
+            lines.Add(new Line(32 * 56 * 2.1f, 32 * 9 * 2.1f, 32 * 57 * 2.1f, 32 * 9 * 2.1f));
+            
+            lines.Add(new Line(32 * 62 * 2.1f, 32 * 13 * 2.1f, 32 * 64 * 2.1f, 32 * 13 * 2.1f));
+
+
 
 
             doors = new List<Door>();
@@ -227,6 +240,7 @@ namespace GXPEngine.Level
             background.y = -Mathf.Clamp(playerTransform.y - (game.height - player.height) * .5f, 0, clampYMax);
             */
             Game.main.x = -player._position.x + 400;
+            Game.main.y = -player._position.y + 300;
         }
 
         public static bool IsCollidingWithLine(Line l, Entity e)
