@@ -165,6 +165,28 @@ namespace GXPEngine.Level
 
             lines.Add(new Line(32 * 18 * 2.1f, 32 * 5 * 2.1f, 32 * 18 * 2.1f, 32 * 4 * 2.1f));
 
+            //level 2
+
+            lines.Add(new Line(32 * 50 * 2.1f, 32 * 8 * 2.1f, 32 * 69 * 2.1f, 32 * 8 * 2.1f));
+            lines.Add(new Line(32 * 69 * 2.1f, 32 * 8 * 2.1f, 32 * 69 * 2.1f, 32 * 16 * 2.1f));
+
+            lines.Add(new Line(32 * 69 * 2.1f, 32 * 16 * 2.1f, 32 * 65 * 2.1f, 32 * 16 * 2.1f));
+            lines.Add(new Line(32 * 65 * 2.1f, 32 * 16 * 2.1f, 32 * 65 * 2.1f, 32 * 17 * 2.1f));
+            
+            lines.Add(new Line(32 * 65 * 2.1f, 32 * 17 * 2.1f, 32 * 69 * 2.1f, 32 * 17 * 2.1f));
+            lines.Add(new Line(32 * 69 * 2.1f, 32 * 17 * 2.1f, 32 * 69 * 2.1f, 32 * 20 * 2.1f));
+
+            lines.Add(new Line(32 * 69 * 2.1f, 32 * 20 * 2.1f, 32 * 63 * 2.1f, 32 * 20 * 2.1f));
+            lines.Add(new Line(32 * 63 * 2.1f, 32 * 20 * 2.1f, 32 * 63 * 2.1f, 32 * 19 * 2.1f));
+
+            lines.Add(new Line(32 * 63 * 2.1f, 32 * 19 * 2.1f, 32 * 67 * 2.1f, 32 * 19 * 2.1f));
+            lines.Add(new Line(32 * 67 * 2.1f, 32 * 19 * 2.1f, 32 * 67 * 2.1f, 32 * 20 * 2.1f));
+
+            lines.Add(new Line(32 * 63 * 2.1f, 32 * 20 * 2.1f, 32 * 58 * 2.1f, 32 * 20 * 2.1f));
+            lines.Add(new Line(32 * 59 * 2.1f, 32 * 20 * 2.1f, 32 * 50 * 2.1f, 32 * 20 * 2.1f));
+
+            lines.Add(new Line(32 * 50 * 2.1f, 32 * 20 * 2.1f, 32 * 50 * 2.1f, 32 * 8 * 2.1f));
+
 
             doors = new List<Door>();
 

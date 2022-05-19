@@ -424,7 +424,7 @@ namespace GXPEngine
             UpdatePosition();
             UpdateAnimation();
 
-            Animate(0.2f);
+            Animate(0.5f);
         }
 
         void UpdateAnimation()
