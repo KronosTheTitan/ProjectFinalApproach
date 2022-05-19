@@ -31,12 +31,23 @@ namespace GXPEngine.Level
             pressurePlates = new List<PressurePlate>();
             background = new SpriteBatch();
 
+            Sprite sp2 = new Sprite("Hall.png");
             Sprite sp = new Sprite("Attic.png");
+            sp2.x = 32 * 50 * 2.1f;
+            sp2.y = 32 * 8 * 2.1f;
+            sp.width = Mathf.Round(32 * 53);
+            sp.height = Mathf.Round(32 * 7);
+
+            sp2.width = Mathf.Round(32 * 19 * 2.1f);
+            sp2.height = Mathf.Round(32 * 12 * 2.1f);
+
+            
 
             width = sp.width * 2.1f;
             height = sp.height * 2.1f;
 
             background.AddChild(sp);
+            Game.main.AddChild(sp2);
             for (int i = 0; i < 9; i++)
             {
                 background.AddChild(new Sprite("Wood_Platform.png")
