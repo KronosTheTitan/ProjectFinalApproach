@@ -31,7 +31,7 @@ namespace GXPEngine.Level
             pressurePlates = new List<PressurePlate>();
             background = new SpriteBatch();
 
-            Sprite sp2 = new Sprite("Hall.png");
+            Sprite sp2 = new Sprite("Attic.png");
             Sprite sp = new Sprite("Attic.png");
             sp2.x = 32 * 50 * 2.1f;
             sp2.y = 32 * 8 * 2.1f;
@@ -41,7 +41,7 @@ namespace GXPEngine.Level
             sp2.width = Mathf.Round(32 * 19 * 2.1f);
             sp2.height = Mathf.Round(32 * 12 * 2.1f);
 
-            
+
 
             width = sp.width * 2.1f;
             height = sp.height * 2.1f;
@@ -88,11 +88,66 @@ namespace GXPEngine.Level
             //
 
             grapplePoints = new List<GrapplePoint>();
-            grapplePoints.Add(new GrapplePoint());
+            grapplePoints.Add(new GrapplePoint() {
+                x = 32 * 2.1f * 23,
+                y = 0
+            });
 
-            PressurePlate pressurePlate = new PressurePlate();
+            grapplePoints.Add(new GrapplePoint()
+            {
+                x = 32 * 2.1f * 57,
+                y = 32 * 2.1f * 15
+            });
+
+            grapplePoints.Add(new GrapplePoint()
+            {
+                x = 32 * 2.1f * 63,
+                y = 32 * 2.1f * 13
+            });
+
+            grapplePoints.Add(new GrapplePoint()
+            {
+                x = 32 * 2.1f * 67,
+                y = 32 * 2.1f * 10
+            });
+
+            grapplePoints.Add(new GrapplePoint()
+            {
+                x = 32 * 2.1f * 56,
+                y = 32 * 2.1f * 9
+            });
+
+            PressurePlate pressurePlate = new PressurePlate()
+            {
+                x = 400,
+                y = 32 * 4 * 2.1f - 20
+            };
 
             pressurePlates.Add(pressurePlate);
+
+            PressurePlate pressurePlate1 = new PressurePlate()
+            {
+                x = 32 * 2.1f * 37 + 7,
+                y = 32 * 6 * 2.1f - 20
+            };
+
+            pressurePlates.Add(pressurePlate1);
+
+            PressurePlate pressurePlate2 = new PressurePlate()
+            {
+                x = 32 * 2.1f * 45 + 7,
+                y = 32 * 7 * 2.1f - 20
+            };
+
+            pressurePlates.Add(pressurePlate2);
+
+            PressurePlate pressurePlate3 = new PressurePlate()
+            {
+                x = 32 * 2.1f * 50 + 7,
+                y = 32 * 13 * 2.1f - 20
+            };
+
+            pressurePlates.Add(pressurePlate3);
 
             manager = new Manager(Game.main);
             lines = new List<Line>();
@@ -214,17 +269,62 @@ namespace GXPEngine.Level
 
             doors = new List<Door>();
 
-            Door d = new Door();
+            Door d = new Door(new Line(32 * 2.1f * 14, 32 * 2.1f * 2, 32 * 2.1f * 14, 32 * 4 * 2.1f));
 
             doors.Add(d);
             pressurePlate.AddDoor(d);
+
+            Door d1 = new Door(new Line(
+                32 * 2.1f * 37, 
+                32 * 2.1f * 3, 
+                32 * 2.1f * 37,
+                32 * 2.1f * 5));
+
+            doors.Add(d1);
+            pressurePlate1.AddDoor(d1);
+
+            Door d12 = new Door(new Line(
+                32 * 2.1f * 48,
+                32 * 2.1f * 7,
+                32 * 2.1f * 49,
+                32 * 2.1f * 7));
+
+            doors.Add(d12);
+            pressurePlate2.AddDoor(d12);
 
             Box box = new Box(player);
             box._position.x = 32 * 4 * 2.1f;
             box._position.y = 32 * 2.1f;
 
+            Box box1 = new Box(player);
+            box1._position.x = 32 * 39 * 2.1f;
+            box1._position.y = 32  * 3 * 2.1f;
+
+            Box box12 = new Box(player);
+            box12._position.x = 32 * 52 * 2.1f;
+            box12._position.y = 32 * 3 * 2.1f;
+
+            Box box3 = new Box(player);
+            box3._position.x = 32 * 52 * 2.1f;
+            box3._position.y = 32 * 10 * 2.1f;
+
+            Door d3 = new Door(new Line(
+                32 * 2.1f * 51,
+                32 * 2.1f * 13,
+                32 * 2.1f * 52,
+                32 * 2.1f * 13));
+
+            doors.Add(d3);
+            pressurePlate3.AddDoor(d3);
+
             boxes.Add(box);
+            boxes.Add(box1);
+            boxes.Add(box12);
+            boxes.Add(box3);
             manager.addEntity(box);
+            manager.addEntity(box1);
+            manager.addEntity(box12);
+            manager.addEntity(box3);
 
             //
 
@@ -299,6 +399,21 @@ namespace GXPEngine.Level
 
             }
             return chosenLine;
+        }
+
+        public static bool IsEntityOnGround(Entity e)
+        {
+            e._position.y += 1;
+            for (int i = 0; i < lines.Count; i++)
+            {
+                if (lines[i].isHorizontal && IsCollidingWithLine(lines[i], e))
+                {
+                    e._position.y -= 1;
+                    return true;
+                }
+            }
+            e._position.y -= 1;
+            return false;
         }
         /// <summary>
         /// Check if the passed in entity runs into any collisions

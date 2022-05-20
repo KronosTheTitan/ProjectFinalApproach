@@ -21,9 +21,9 @@ namespace GXPEngine.Level
 
         Line line;
 
-        public Door()
+        public Door(Line l)
         {
-            line = new Line(32 * 2.1f * 14, 32 * 2.1f * 2, 32 * 2.1f * 14, 32 * 4 * 2.1f);
+            line = l;
 
             Level.lines.Add(line);
         }

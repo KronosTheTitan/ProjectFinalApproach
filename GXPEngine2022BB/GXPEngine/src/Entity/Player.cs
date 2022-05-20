@@ -177,11 +177,8 @@ namespace GXPEngine
                 rope = new Vec2(_position.x + width / 2, _position.y + height / 2);
                 grapple = new Vec2(gPoint.x + gPoint.width / 2, gPoint.y + gPoint.height / 2);
 
-                if (Level.Level.RayCastLine(new Line(grapple.x, grapple.y, rope.x, rope.y)))
-                {
-                    return;
-                }
 
+                _velocity.Zero();
                 ropeAngleVelocity = -.005f * _velocity.x;
 
                 grappleOrign = rope - grapple;
@@ -209,6 +206,8 @@ namespace GXPEngine
             _velocity = speed;
 
             line.Set(grapple.x, grapple.y, rope.x, rope.y);
+
+            grounded = true;
 
         }
 
@@ -306,7 +305,7 @@ namespace GXPEngine
 
         PlayerState state = PlayerState.Idle;
 
-        public Player() : base("player.png",26,7)
+        public Player() : base("player.png", 26, 7)
         {
             line = new Rope(0, 0, 0, 0);
             Game.main.AddChild(line);
@@ -336,6 +335,7 @@ namespace GXPEngine
             if (Input.GetKey(Key.SPACE) && grounded)
             {
                 _velocity.y = -30;
+                isGrapple = false;
             }
         }
 
@@ -361,6 +361,8 @@ namespace GXPEngine
             Controlls();
             Move();
 
+            bool isTopOrBottom = false;
+
             foreach (Box box in GXPEngine.Level.Level.boxes)
             {
                 bool v = AABB(this, box);
@@ -368,9 +370,9 @@ namespace GXPEngine
                 {
                     float totalMass = 1 + 1;
 
-                    Vec2 u = ((1*this._velocity + 1*box._velocity) / totalMass);
+                    Vec2 u = ((1 * this._velocity + 1 * box._velocity) / totalMass);
 
-                    bool isTopOrBottom = AABBTop(this, box);
+                    isTopOrBottom = AABBTop(this, box);
 
                     this._position = AABBMax(box, this);
                     if (isTopOrBottom) continue;
@@ -393,14 +395,20 @@ namespace GXPEngine
                     ropeLengthOld = grappleOrign.Length();
                 }
             }
-            else
+
+            if (grounded && !GXPEngine.Level.Level.IsEntityOnGround(this) && !isGrapple)
             {
                 grounded = false;
             }
 
+            if (isTopOrBottom)
+            {
+                grounded = isTopOrBottom;
+            }
+
             bool updateAnimation = false;
 
-            if (_velocity.Length()<18.1f && grounded)
+            if (_velocity.Length() < 18.1f && grounded)
             {
                 if (BoxGrapple)
                     state = PlayerState.Grappling;
@@ -454,7 +462,7 @@ namespace GXPEngine
                     SetCycle(104, 22);
                     break;
                 case PlayerState.Grappling:
-                    SetCycle(202,6);
+                    SetCycle(202, 6);
                     break;
             }
         }

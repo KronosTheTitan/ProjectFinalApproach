@@ -13,8 +13,6 @@ namespace GXPEngine.Level
         public PressurePlate(int width = 50, int height = 20) : base(width, height, true)
         {
             doors = new List<Door>();
-            x = 400;
-            y = 32 * 4 * 2.1f - 20;
             Clear(Color.Red);
             Game.main.AddChild(this);
         }

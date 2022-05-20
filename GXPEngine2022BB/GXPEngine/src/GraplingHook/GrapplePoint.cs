@@ -10,8 +10,6 @@ namespace GXPEngine.GraplingHook
     {
         public GrapplePoint(int width = 50, int height = 50) : base(width, height, true)
         {
-            x = 400;
-            y = 0;
             Clear(Color.MediumPurple);
             Game.main.AddChild(this);
         }
